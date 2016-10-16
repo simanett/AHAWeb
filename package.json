@@ -1,7 +1,7 @@
 {
   "name": "react-webpack-babel",
   "version": "0.0.3",
-  "description": "React Webpack Babel Starter Kit",
+  "description": "AHA project",
   "main": "''",
   "scripts": {
     "build": "webpack --config webpack.production.config.js --progress --profile --colors",
@@ -10,11 +10,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alicoding/react-webpack-babel"
+    "url": ""
   },
-  "author": "Ali Al Dallal",
+  "author": "AHA project",
   "license": "MIT",
-  "homepage": "https://github.com/alicoding/react-webpack-babel#readme",
+  "homepage": "",
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.3",
     "node-sass": "^3.9.2",
