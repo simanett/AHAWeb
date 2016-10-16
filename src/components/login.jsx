@@ -1,14 +1,6 @@
-import React from 'react';
+import React from "react";
 
-/**
- * Login page component
- */
 export default class Login extends React.Component {
-    /**
-     * Render
-     *
-     * @returns {XML}
-     */
     render() {
         if (userLoggedIn()) {
             return (
@@ -25,8 +17,6 @@ export default class Login extends React.Component {
             );
         }
     }
-
-
 }
 
 function userLoggedIn() {

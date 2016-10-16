@@ -1,5 +1,5 @@
 import React from 'react';
-
+/*
 import { Nav, NavItem, Glyphicon } from 'react-bootstrap';
 import { IndexLinkContainer, LinkContainer } from 'react-router-bootstrap';
 
@@ -39,3 +39,4 @@ export default class Navbar extends React.Component {
         );
     }
 }
+*/
