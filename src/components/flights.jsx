@@ -10,7 +10,8 @@ var flights = require("../api/flights");
 export default class Flights extends React.Component {
     render() {
         return (
-            <div>
+            <div id="flights">
+            <h2>Flights</h2>
                 <Table bordered hover responsive striped>
                     <thead>
                         <tr>

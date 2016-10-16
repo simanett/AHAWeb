@@ -1,6 +1,7 @@
 import React from 'react';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import styles from './css/aha.css';
+// import ahaStyle from '../css/aha.css';
 import './css/aha.css';
 import './css/login.css';
 import Navbar from './components/navbar';
@@ -11,7 +12,6 @@ export default class App extends React.Component {
     return (
       <div>
         <Navbar />
-        <h1>Air HelgAnett</h1>
         {this.props.children}
       </div>
     )
