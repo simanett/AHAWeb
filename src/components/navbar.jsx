@@ -1,7 +1,6 @@
 import React from 'react';
-/*
 import { Nav, NavItem, Glyphicon } from 'react-bootstrap';
-import { IndexLinkContainer, LinkContainer } from 'react-router-bootstrap';
+import { Link } from 'react-router';
 
 export default class Navbar extends React.Component {
     render() {
@@ -21,16 +20,16 @@ export default class Navbar extends React.Component {
                         </div>
                         <div id="navbar" className="navbar-collapse collapse">
                             <ul className="nav navbar-nav">
-                                <LinkContainer to="/login">
+                                <Link to="/login">
                                     <NavItem>
                                         Login <Glyphicon glyph="user"/>
                                     </NavItem>
-                                </LinkContainer>
-                                <LinkContainer to="/flights">
+                                </Link>
+                                <Link to="/flights">
                                     <NavItem>
                                         Flights
                                     </NavItem>
-                                </LinkContainer>
+                                </Link>
                             </ul>
                         </div>
                     </div>
@@ -39,4 +38,3 @@ export default class Navbar extends React.Component {
         );
     }
 }
-*/

@@ -3,14 +3,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { Table } from 'react-bootstrap';
-
+*/
 var flights = require("../api/flights");
 
 export class Flights extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
 
@@ -44,6 +40,7 @@ export class Flights extends React.Component {
     }
 }
 
+/*
 // export the connected class
 function mapStateToProps(state) {
     return {
