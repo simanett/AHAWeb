@@ -1,6 +1,8 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import styles from './index.scss';
 import React from 'react';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import styles from './css/aha.css';
+import './css/aha.css';
+import './css/login.css';
 import Navbar from './components/navbar';
 import Login from './components/login';
 
@@ -10,7 +12,7 @@ export default class App extends React.Component {
       <div>
         <Navbar />
         <h1>Air HelgAnett</h1>
-        <Login />
+        {this.props.children}
       </div>
     )
   }

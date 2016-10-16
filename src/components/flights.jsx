@@ -2,14 +2,14 @@ import React from 'react';
 /*
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { Table } from 'react-bootstrap';
 */
+import { Table } from 'react-bootstrap';
+
 var flights = require("../api/flights");
 
-export class Flights extends React.Component {
+export default class Flights extends React.Component {
     render() {
         return (
-
             <div>
                 <Table bordered hover responsive striped>
                     <thead>

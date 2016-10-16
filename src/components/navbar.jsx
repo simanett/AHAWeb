@@ -1,6 +1,7 @@
 import React from 'react';
 import { Nav, NavItem, Glyphicon } from 'react-bootstrap';
-import { Link } from 'react-router';
+// import { Link } from 'react-router';
+import NavLink from './navLink'
 
 export default class Navbar extends React.Component {
     render() {
@@ -19,17 +20,9 @@ export default class Navbar extends React.Component {
                             <Glyphicon glyph="plane"/> Air HelgAnett</a>
                         </div>
                         <div id="navbar" className="navbar-collapse collapse">
-                            <ul className="nav navbar-nav">
-                                <Link to="/login">
-                                    <NavItem>
-                                        Login <Glyphicon glyph="user"/>
-                                    </NavItem>
-                                </Link>
-                                <Link to="/flights">
-                                    <NavItem>
-                                        Flights
-                                    </NavItem>
-                                </Link>
+                            <ul role="nav" className="nav navbar-nav">
+                                <li><NavLink to="/login" activeClassName="active">Login <Glyphicon glyph="user"/></NavLink></li>
+                                <li><NavLink to="/flights" activeClassName="active">Flights</NavLink></li>
                             </ul>
                         </div>
                     </div>
