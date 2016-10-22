@@ -5,7 +5,8 @@ import { push } from 'react-router-redux';
 */
 import { Table } from 'react-bootstrap';
 
-var flights = require("../api/flights");
+// var flights = require("../api/flights");
+var flights = require("../api/flightsData");
 
 export default class Flights extends React.Component {
     render() {
@@ -15,22 +16,28 @@ export default class Flights extends React.Component {
                 <Table bordered hover responsive striped>
                     <thead>
                         <tr>
-                            <th>Flight</th>
+                            <th>Id</th>
+                            <th>Flight number</th>
+                            <th>Departure</th>
+                            <th>Flight duration</th>
+                            <th>Airplane</th>
                             <th>From</th>
                             <th>To</th>
-                            <th>Departure</th>
-                            <th>Arrival</th>
+                            <th>Price</th>
                         </tr>
                     </thead>
                     <tbody>
                         { flights.getFlights().map((flight, index) => {
                             return (
-                            <tr>
-                                <td>{ flight.flight }</td>
-                                <td>{ flight.from }</td>
-                                <td>{ flight.to }</td>
+                            <tr key={index}>
+                                <td>{ flight.id }</td>
+                                <td>{ flight.flightNumber }</td>
                                 <td>{ flight.departure }</td>
-                                <td>{ flight.arrival }</td>
+                                <td>{ flight.flightDuration }</td>
+                                <td>{ flight.airplane.model }</td>
+                                <td>{ flight.airportFrom.city }</td>
+                                <td>{ flight.airportTo.city }</td>
+                                <td>{ flight.basicPrice }</td>
                             </tr>
                             )
                         }) }
