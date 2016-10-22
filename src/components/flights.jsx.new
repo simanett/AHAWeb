@@ -1,0 +1,59 @@
+import React from 'react';
+/*
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
+*/
+import { Table } from 'react-bootstrap';
+
+// var flights = require("../api/flights");
+var flights = require("../api/flights.json");
+
+export default class Flights extends React.Component {
+    render() {
+        return (
+            <div id="flights">
+            <h2>Flights</h2>
+                <Table bordered hover responsive striped>
+                    <thead>
+                        <tr>
+                            <th>Flight number</th>
+                            <th>Departure</th>
+                            <th>FLight duration</th>
+                            <th>Airplane</th>
+                            <th>Airport to</th>
+                            <th>Airport from</th>
+                            <th>Id</th>
+                            <th>Basic price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        { flights.map((flight, index) => {
+                            return (
+                            <tr>
+                                <td>{ flight.flightNumber }</td>
+                                <td>{ flight.departure }</td>
+                                <td>{ flight.flightDuration }</td>
+                                <td>{ flight.airplane }</td>
+                                <td>{ flight.airportTo }</td>
+                                <td>{ flight.airportFrom }</td>
+                                <td>{ flight.id }</td>
+                                <td>{ flight.basicPrice }</td>
+                            </tr>
+                            )
+                        }) }
+                    </tbody>
+                </Table>
+            </div>
+        );
+    }
+}
+
+/*
+// export the connected class
+function mapStateToProps(state) {
+    return {
+
+    };
+}
+export default connect(mapStateToProps)(Flights);
+*/

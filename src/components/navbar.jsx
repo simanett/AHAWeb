@@ -7,7 +7,7 @@ export default class Navbar extends React.Component {
     render() {
         return (
             <div id="navbar">
-                <Nav bsStyle="ahaStyleLogin navbar-inverse navbar-fixed-top">
+                <Nav className="ahaStyleLogin navbar-inverse navbar-fixed-top">
                     <div className="container">
                         <div className="navbar-header">
                             <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -21,8 +21,8 @@ export default class Navbar extends React.Component {
                         </div>
                         <div id="navbar" className="navbar-collapse collapse">
                             <ul role="nav" className="nav navbar-nav">
-                                <li><NavLink to="/login" activeClassName="active">Login <Glyphicon glyph="user"/></NavLink></li>
-                                <li><NavLink to="/flights" activeClassName="active">Flights</NavLink></li>
+                                <li><NavLink to="/login">Login <Glyphicon glyph="user"/></NavLink></li>
+                                <li><NavLink to="/flights">Flights</NavLink></li>
                             </ul>
                         </div>
                     </div>
