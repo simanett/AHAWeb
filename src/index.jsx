@@ -1,16 +1,43 @@
 import React from 'react';
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
-import { render } from 'react-dom';
+import * as ReactRouter from 'react-router';
+import * as ReactDOM from 'react-dom';
 import App from './app.jsx';
 import Login from './components/login';
 import Flights from './components/flights.jsx';
+import * as ReactRedux from "react-redux";
 
-render((
-    <Router history={hashHistory}>
-        <Route path="/" component={App}>
-            <IndexRoute component={Login}/>
-            <Route path="/login" component={Login}/>
-            <Route path="/flights" component={Flights}/>
-        </Route>
-    </Router>
-), document.getElementById('app'));
+import { createStore } from 'redux';
+
+
+
+function counter(state = 0, action) {
+    switch (action.type) {
+        case 'INCREMENT':
+            return state + 1
+        case 'DECREMENT':
+            return state - 1
+        default:
+            return state
+    }
+}
+
+export const store = createStore(counter);
+
+store.subscribe(() =>
+    console.log(store.getState())
+);
+
+const render = () => {
+    ReactDOM.render(
+        <ReactRedux.Provider store={store} >
+            <ReactRouter.Router history={ReactRouter.hashHistory}>
+                <ReactRouter.Route path="/" component={App}>
+                    <ReactRouter.IndexRoute component={Login} />
+                    <ReactRouter.Route path="/login" component={Login} />
+                    <ReactRouter.Route path="/flights" component={Flights} />
+                </ReactRouter.Route>
+            </ReactRouter.Router>
+        </ReactRedux.Provider>, document.getElementById("app"));
+}
+
+window.onload = () => render();
