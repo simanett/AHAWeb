@@ -1,7 +1,9 @@
 import React from "react";
+import * as ReactRedux from "react-redux";
+
 import ahaStyleLogin from '../css/login.css';
 
-export default class Login extends React.Component {
+class Login extends React.Component {
     render() {
         if (userLoggedIn()) {
             return (
@@ -23,3 +25,10 @@ export default class Login extends React.Component {
 function userLoggedIn() {
     return true;
 }
+
+export const ConnectedLogin = ReactRedux.connect(
+    (state) => ({
+        counter: state.counter,
+        flights: state.flights,
+    })
+)(Login);

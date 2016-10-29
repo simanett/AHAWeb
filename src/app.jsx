@@ -19,10 +19,6 @@ class App extends React.Component {
   }
 }
 
-App.propTypes = {
-    counter: React.PropTypes.number.isRequired
-};
-
-export default ReactRedux.connect(state => ({
-    counter: state.counter
-}))(App);
+export const ConnectedApp = ReactRedux.connect(
+  (state) => (state)
+)(App);

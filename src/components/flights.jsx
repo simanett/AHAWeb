@@ -1,8 +1,8 @@
 import React from "react";
 import * as $ from "jquery";
 import { Table } from 'react-bootstrap';
-
 import * as ReactRedux from "react-redux";
+
 import * as Actions from "../actions/actions";
 
 var flights = require("../api/flightsData");
@@ -155,8 +155,5 @@ export const ConnectedFlights = ReactRedux.connect(
     (state) => ({
         counter: state.counter,
         flights: state.flights,
-    }),
-    (dispatch) => ({
-        
     })
 )(Flights);
