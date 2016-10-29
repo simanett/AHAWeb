@@ -1,4 +1,5 @@
 import React from 'react';
+import * as ReactRedux from 'react-redux';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import styles from './css/aha.css';
 // import ahaStyle from '../css/aha.css';
@@ -7,7 +8,7 @@ import './css/login.css';
 import Navbar from './components/navbar';
 import Login from './components/login';
 
-export default class App extends React.Component {
+class App extends React.Component {
   render() {
     return (
       <div>
@@ -17,3 +18,11 @@ export default class App extends React.Component {
     )
   }
 }
+
+App.propTypes = {
+    counter: React.PropTypes.number.isRequired
+};
+
+export default ReactRedux.connect(state => ({
+    counter: state.counter
+}))(App);
