@@ -1,12 +1,29 @@
-import React from 'react';
-import * as $ from 'jquery';
-/*
-import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
-*/
+import React from "react";
+import * as $ from "jquery";
 import { Table } from 'react-bootstrap';
 
+import * as ReactRedux from "react-redux";
+import * as Actions from "../actions/actions";
+
 var flights = require("../api/flightsData");
+
+function getFlightsFromServletNew1() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            cache: false,
+            dataType: "json",
+            error: function (xhr, status, err) {
+                console.log("ajax error");
+                reject(err);
+            }.bind(this),
+            success: function (data) {
+                console.log(data);
+                resolve(data);
+            }.bind(this),
+            url: "http://localhost:8080/AHAService/FlightServlet?action=getFlights",
+        });
+    });
+}
 
 function getFlightsFromServlet() {
     return new Promise((resolve, reject) => {
@@ -27,7 +44,7 @@ function getFlightsFromServlet() {
     });
 }
 
-export default class Flights extends React.Component {
+class Flights extends React.Component {
 
     constructor(props) {
         super(props);
@@ -82,6 +99,10 @@ export default class Flights extends React.Component {
             }],
             });
         });
+
+        getFlightsFromServletNew1().then((result) => {
+            
+        });
     }
 
     render() {
@@ -91,6 +112,7 @@ export default class Flights extends React.Component {
         return (
             <div id="flights">
                 <h2>Flights</h2>
+                <p>Counter: {this.props.counter}</p>
                 <div key={jsonData.message}>{jsonData.message}</div>
                 <h3>{this.state.message}</h3>
                 <h3>{this.state.flights[0].flightNumber}</h3>
@@ -129,12 +151,12 @@ export default class Flights extends React.Component {
     }
 }
 
-/*
-// export the connected class
-function mapStateToProps(state) {
-    return {
-
-    };
-}
-export default connect(mapStateToProps)(Flights);
-*/
+export const ConnectedFlights = ReactRedux.connect(
+    (state) => ({
+        counter: state.counter,
+        flights: state.flights,
+    }),
+    (dispatch) => ({
+        
+    })
+)(Flights);
