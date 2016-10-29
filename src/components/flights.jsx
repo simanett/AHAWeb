@@ -7,17 +7,17 @@ import * as Actions from "../actions/actions";
 
 var flights = require("../api/flightsData");
 
+import { store } from "../index";
+
 function getFlightsFromServletNew1() {
     return new Promise((resolve, reject) => {
         $.ajax({
             cache: false,
             dataType: "json",
             error: function (xhr, status, err) {
-                console.log("ajax error");
                 reject(err);
             }.bind(this),
             success: function (data) {
-                console.log(data);
                 resolve(data);
             }.bind(this),
             url: "http://localhost:8080/AHAService/FlightServlet?action=getFlights",
@@ -31,12 +31,9 @@ function getFlightsFromServlet() {
             cache: false,
             dataType: "json",
             error: function (xhr, status, err) {
-                console.log("ajax error");
                 reject(err);
             }.bind(this),
             success: function (data) {
-                console.log("ajax success");
-                console.log(data);
                 resolve(data);
             }.bind(this),
             url: "https://www.foaas.com/gfy/Anett/Helga",
@@ -78,35 +75,33 @@ class Flights extends React.Component {
             this.setState({
                 message: result.message,
                 flights: [{
-                "flightNumber": "AHA1111",
-                "departure": "júl. 20, 2016",
-                "flightDuration": 30,
-                "airplane": {
-                    "maxDistance": 10000,
-                    "model": "Airbus A320",
-                    "id": 2
-                },
-                "airportTo": {
-                    "code": "BUD",
-                    "city": "Budapest"
-                },
-                "airportFrom": {
-                    "code": "NAN",
-                    "city": "Nantes"
-                },
-                "id": 41,
-                "basicPrice": 45000
-            }],
+                    "flightNumber": "AHA1111",
+                    "departure": "júl. 20, 2016",
+                    "flightDuration": 30,
+                    "airplane": {
+                        "maxDistance": 10000,
+                        "model": "Airbus A320",
+                        "id": 2
+                    },
+                    "airportTo": {
+                        "code": "BUD",
+                        "city": "Budapest"
+                    },
+                    "airportFrom": {
+                        "code": "NAN",
+                        "city": "Nantes"
+                    },
+                    "id": 41,
+                    "basicPrice": 45000
+                }],
             });
-        });
-
-        getFlightsFromServletNew1().then((result) => {
-            
         });
     }
 
     render() {
-
+        getFlightsFromServletNew1().then((result) => {
+            store.dispatch(Actions.updateFlights(result))
+        });
         var jsonData = { message: "Golf foxtrot yankee, Anett.", subtitle: "- Helga" };
 
         return (
@@ -143,7 +138,7 @@ class Flights extends React.Component {
                                     <td>{flight.basicPrice}</td>
                                 </tr>
                             )
-                        })}
+                        }) }
                     </tbody>
                 </Table>
             </div>

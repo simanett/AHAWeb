@@ -18,7 +18,7 @@ export const counter = (state = 1, action) => {
 
 export const flights = (state = {}, action) => {
     switch (action.type) {
-        case "UPDATE_FLIGHTS":
+        case "LOAD_FLIGHTS":
             return action.flights
         default:
             return state
