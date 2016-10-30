@@ -42,10 +42,10 @@ export const airports = (state = [], action) => {
 }
 
 let initSearchDetailsState = {
-   from: "",
-   to: "",
-   departureDate: "",
-   arrivalDate: "",
+    airportFrom: "",
+    airportTo: "",
+    departureDate: "",
+    arrivalDate: "",
 }
 export const searchDetails = (state = initSearchDetailsState, action) => {
     switch (action.type) {
@@ -56,6 +56,14 @@ export const searchDetails = (state = initSearchDetailsState, action) => {
         case "SET_ARRIVAL_DATE":
             return Object.assign({}, state, {
                 arrivalDate: action.arrivalDate,
+            });
+        case "SET_AIRPORT_FROM":
+            return Object.assign({}, state, {
+                airportFrom: action.airportFrom,
+            });
+        case "SET_AIRPORT_TO":
+            return Object.assign({}, state, {
+                airportTo: action.airportTo,
             });
         default:
             return state

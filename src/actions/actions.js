@@ -45,3 +45,19 @@ export const setArrivalDate = (arrivalDate) => {
     arrivalDate: arrivalDate,
   }
 }
+
+const SET_AIRPORT_FROM = "SET_AIRPORT_FROM";
+export const setAirportFrom = (airportFrom) => {
+  return {
+    type: SET_AIRPORT_FROM,
+    airportFrom: airportFrom,
+  }
+}
+
+const SET_AIRPORT_TO = "SET_AIRPORT_TO";
+export const setAirportTo = (airportTo) => {
+  return {
+    type: SET_AIRPORT_TO,
+    airportTo: airportTo,
+  }
+}

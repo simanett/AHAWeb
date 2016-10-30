@@ -81,13 +81,15 @@ class Flights extends React.Component {
                             />
                     </div>
                     {this.props.airports.length > 0 &&
-
                         <div className="col-sm-3">
                             <label className="col-sm-12" >From: </label>
-                            <select className="form-control" id="airportFrom">
+                            <select
+                                className="form-control"
+                                id="airportFrom"
+                                onChange={this.setAirportFrom.bind(this) }>
                                 {this.props.airports.map((airport, index) => {
                                     return (
-                                        <option key={index}>{airport.city}</option>
+                                        <option key={index} >{airport.city}</option>
                                     )
                                 }) }
                             </select>
@@ -96,10 +98,17 @@ class Flights extends React.Component {
                     {this.props.airports.length > 0 &&
                         <div className="col-sm-3">
                             <label className="col-sm-12" >To: </label>
-                            <select className="form-control" id="airportTo">
+                            <select
+                                className="form-control"
+                                id="airportTo"
+                                onChange={this.setAirportTo.bind(this) }>
                                 {this.props.airports.map((airport, index) => {
                                     return (
-                                        <option key={index}>{airport.city}</option>
+                                        <option
+                                            key={index}
+                                            value ={airport.city}
+                                            >{airport.city}
+                                        </option>
                                     )
                                 }) }
                             </select>
@@ -150,6 +159,16 @@ class Flights extends React.Component {
     setArrivalDate(date) {
         let formattedDate = date.format("YYYY MM DD");
         store.dispatch(Actions.setArrivalDate(formattedDate));
+    }
+
+    setAirportFrom(event) {
+        let airportFrom = event.target.value;
+        store.dispatch(Actions.setAirportFrom(airportFrom));
+    }
+
+    setAirportTo(event) {
+        let airportTo = event.target.value;
+        store.dispatch(Actions.setAirportTo(airportTo));
     }
 
     chooseFlight(event) {
