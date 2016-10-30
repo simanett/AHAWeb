@@ -42,15 +42,42 @@ class Flights extends React.Component {
         return (
             <div id="flights">
                 <h2>Flights</h2>
-                <DatePicker
-                    selected = {moment(this.props.searchDetails.departureDate, "YYYY MM DD")}
-                    onChange={this.setDepartureDate.bind(this) }
-                    />
-                <DatePicker
-                    selected = {moment(this.props.searchDetails.arrivalDate, "YYYY MM DD")}
-                    onChange={this.setArrivalDate.bind(this) }
-                    />
-
+                <div className="form-group row">
+                    <div className="col-sm-3">
+                        <label className="col-sm-12" for="">Departure:</label>
+                        <DatePicker
+                            className = "form-control"
+                            selected = {moment(this.props.searchDetails.departureDate, "YYYY MM DD") }
+                            onChange={this.setDepartureDate.bind(this) }
+                            />
+                    </div>
+                    <div className="col-sm-3">
+                        <label className="col-sm-12" for="">Arrival:</label>
+                        <DatePicker
+                            className = "form-control"
+                            selected = {moment(this.props.searchDetails.arrivalDate, "YYYY MM DD") }
+                            onChange={this.setArrivalDate.bind(this) }
+                            />
+                    </div>
+                    <div className="col-sm-3">
+                        <label className="col-sm-12" for="airportFrom">From: </label>
+                        <select className="form-control" id="airportFrom">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    <div className="col-sm-3">
+                        <label className="col-sm-12" for="airportTo">To:</label>
+                        <select className="form-control" id="airportTo">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                </div>
                 {this.props.flights.length > 0 &&
                     <Table bordered hover responsive striped>
                         <thead>
