@@ -34,6 +34,7 @@ class Flights extends React.Component {
             store.dispatch(Actions.updateFlights(result))
         });
         store.dispatch(Actions.setDepartureDate(moment().format("YYYY MM DD")));
+        store.dispatch(Actions.setArrivalDate(moment().format("YYYY MM DD")));
     }
 
     render() {
@@ -43,7 +44,11 @@ class Flights extends React.Component {
                 <h2>Flights</h2>
                 <DatePicker
                     selected = {moment(this.props.searchDetails.departureDate, "YYYY MM DD")}
-                    onChange={this.handleChange.bind(this) }
+                    onChange={this.setDepartureDate.bind(this) }
+                    />
+                <DatePicker
+                    selected = {moment(this.props.searchDetails.arrivalDate, "YYYY MM DD")}
+                    onChange={this.setArrivalDate.bind(this) }
                     />
 
                 {this.props.flights.length > 0 &&
@@ -82,9 +87,14 @@ class Flights extends React.Component {
         );
     }
 
-    handleChange(date) {
+    setDepartureDate(date) {
         let formattedDate = date.format("YYYY MM DD");
         store.dispatch(Actions.setDepartureDate(formattedDate));
+    }
+
+    setArrivalDate(date) {
+        let formattedDate = date.format("YYYY MM DD");
+        store.dispatch(Actions.setArrivalDate(formattedDate));
     }
 
     chooseFlight(event) {

@@ -44,7 +44,12 @@ export const searchDetails = (state = initSearchDetailsState, action) => {
             return Object.assign({}, state, {
                 departureDate: action.departureDate,
             });
+        case "SET_ARRIVAL_DATE":
+            return Object.assign({}, state, {
+                arrivalDate: action.arrivalDate,
+            });
         default:
             return state
     }
 }
+

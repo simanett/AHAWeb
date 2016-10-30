@@ -29,3 +29,11 @@ export const setDepartureDate = (departureDate) => {
     departureDate: departureDate,
   }
 }
+
+const SET_ARRIVAL_DATE = "SET_ARRIVAL_DATE";
+export const setArrivalDate = (arrivalDate) => {
+  return {
+    type: SET_ARRIVAL_DATE,
+    arrivalDate: arrivalDate,
+  }
+}
