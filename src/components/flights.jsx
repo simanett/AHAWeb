@@ -42,9 +42,9 @@ class Flights extends React.Component {
         return (
             <div id="flights">
                 <h2>Flights</h2>
-                <div className="form-group row">
+                <div className="form-group row" id="flight-search">
                     <div className="col-sm-3">
-                        <label className="col-sm-12" for="">Departure:</label>
+                        <label className="col-sm-12" >Departure:</label>
                         <DatePicker
                             className = "form-control"
                             selected = {moment(this.props.searchDetails.departureDate, "YYYY MM DD") }
@@ -52,7 +52,7 @@ class Flights extends React.Component {
                             />
                     </div>
                     <div className="col-sm-3">
-                        <label className="col-sm-12" for="">Arrival:</label>
+                        <label className="col-sm-12" >Arrival:</label>
                         <DatePicker
                             className = "form-control"
                             selected = {moment(this.props.searchDetails.arrivalDate, "YYYY MM DD") }
@@ -60,7 +60,7 @@ class Flights extends React.Component {
                             />
                     </div>
                     <div className="col-sm-3">
-                        <label className="col-sm-12" for="airportFrom">From: </label>
+                        <label className="col-sm-12" >From: </label>
                         <select className="form-control" id="airportFrom">
                             <option>1</option>
                             <option>2</option>
@@ -69,7 +69,7 @@ class Flights extends React.Component {
                         </select>
                     </div>
                     <div className="col-sm-3">
-                        <label className="col-sm-12" for="airportTo">To:</label>
+                        <label className="col-sm-12" >To:</label>
                         <select className="form-control" id="airportTo">
                             <option>1</option>
                             <option>2</option>
