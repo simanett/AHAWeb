@@ -18,7 +18,12 @@ export const chooseFlight = (state = {}, action) => {
     }
 }
 
-export const passengerDetails = (state = {}, action) => {
+let initPassengerState = {
+    id: "",
+    name: "",
+    email: "",
+}
+export const passengerDetails = (state = initPassengerState, action) => {
     switch (action.type) {
         case "SET_PASSENGER":
             return action.passengerDetails
