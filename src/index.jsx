@@ -7,10 +7,9 @@ import { ConnectedApp } from './app.jsx';
 import { ConnectedLogin } from './components/login';
 import { ConnectedFlights } from './components/flights.jsx';
 import { combineReducers, createStore } from "redux";
-import { counter, flights } from "./reducers/reducers";
+import { flights } from "./reducers/reducers";
 
 const rootReducer = combineReducers({
-    counter,
     flights,
 });
 

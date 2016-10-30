@@ -28,7 +28,6 @@ function userLoggedIn() {
 
 export const ConnectedLogin = ReactRedux.connect(
     (state) => ({
-        counter: state.counter,
         flights: state.flights,
     })
 )(Login);
