@@ -65,7 +65,7 @@ class Flights extends React.Component {
                 <h2>Flights</h2>
                 <div className="form-group row" id="flight-search">
                     <div className="col-sm-3">
-                        <label className="col-sm-12" >Departure:</label>
+                        <label className="col-sm-12" >Departure: </label>
                         <DatePicker
                             className = "form-control"
                             selected = {moment(this.props.searchDetails.departureDate, "YYYY MM DD") }
@@ -73,31 +73,38 @@ class Flights extends React.Component {
                             />
                     </div>
                     <div className="col-sm-3">
-                        <label className="col-sm-12" >Arrival:</label>
+                        <label className="col-sm-12" >Arrival: </label>
                         <DatePicker
                             className = "form-control"
                             selected = {moment(this.props.searchDetails.arrivalDate, "YYYY MM DD") }
                             onChange={this.setArrivalDate.bind(this) }
                             />
                     </div>
-                    <div className="col-sm-3">
-                        <label className="col-sm-12" >From: </label>
-                        <select className="form-control" id="airportFrom">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                        </select>
-                    </div>
-                    <div className="col-sm-3">
-                        <label className="col-sm-12" >To:</label>
-                        <select className="form-control" id="airportTo">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                        </select>
-                    </div>
+                    {this.props.airports.length > 0 &&
+
+                        <div className="col-sm-3">
+                            <label className="col-sm-12" >From: </label>
+                            <select className="form-control" id="airportFrom">
+                                {this.props.airports.map((airport, index) => {
+                                    return (
+                                        <option key={index}>{airport.city}</option>
+                                    )
+                                }) }
+                            </select>
+                        </div>
+                    }
+                    {this.props.airports.length > 0 &&
+                        <div className="col-sm-3">
+                            <label className="col-sm-12" >To: </label>
+                            <select className="form-control" id="airportTo">
+                                {this.props.airports.map((airport, index) => {
+                                    return (
+                                        <option key={index}>{airport.city}</option>
+                                    )
+                                }) }
+                            </select>
+                        </div>
+                    }
                 </div>
                 {this.props.flights.length > 0 &&
                     <Table bordered hover responsive striped>
@@ -166,6 +173,7 @@ class Flights extends React.Component {
 export const ConnectedFlights = ReactRedux.connect(
     (state) => ({
         flights: state.flights,
+        airports: state.airports,
         searchDetails: state.searchDetails,
     })
 )(Flights);
