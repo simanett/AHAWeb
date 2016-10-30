@@ -33,20 +33,16 @@ class Flights extends React.Component {
         getFlightsFromServlet().then((result) => {
             store.dispatch(Actions.updateFlights(result))
         });
+        store.dispatch(Actions.setDepartureDate(moment().format("YYYY MM DD")));
     }
 
-
     render() {
-        /*
-                var currentTime = moment().format("YYYY MM DD");
-                console.log('Current Time is ', currentTime);
-        */
         let startDate = moment();
         return (
             <div id="flights">
                 <h2>Flights</h2>
                 <DatePicker
-                    selected={startDate}
+                    selected = {moment(this.props.searchDetails.departureDate, "YYYY MM DD")}
                     onChange={this.handleChange.bind(this) }
                     />
 
@@ -88,8 +84,6 @@ class Flights extends React.Component {
 
     handleChange(date) {
         let formattedDate = date.format("YYYY MM DD");
-        console.log(formattedDate);
-        alert(formattedDate);
         store.dispatch(Actions.setDepartureDate(formattedDate));
     }
 
@@ -114,5 +108,6 @@ class Flights extends React.Component {
 export const ConnectedFlights = ReactRedux.connect(
     (state) => ({
         flights: state.flights,
+        searchDetails: state.searchDetails,
     })
 )(Flights);
