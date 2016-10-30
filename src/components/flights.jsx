@@ -27,12 +27,33 @@ function getFlightsFromServlet() {
     });
 }
 
+function getAirportsFromServlet() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            cache: false,
+            dataType: "json",
+            error: function (xhr, status, err) {
+                reject(err);
+            }.bind(this),
+            success: function (data) {
+                resolve(data);
+            }.bind(this),
+            url: "http://localhost:8080/AHAService/AirportServlet?action=getAirports",
+        });
+    });
+}
+
 class Flights extends React.Component {
 
     componentDidMount() {
         getFlightsFromServlet().then((result) => {
             store.dispatch(Actions.updateFlights(result))
         });
+
+        getAirportsFromServlet().then((result) => {
+            store.dispatch(Actions.loadAirports(result))
+        });
+
         store.dispatch(Actions.setDepartureDate(moment().format("YYYY MM DD")));
         store.dispatch(Actions.setArrivalDate(moment().format("YYYY MM DD")));
     }

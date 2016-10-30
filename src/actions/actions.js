@@ -6,6 +6,14 @@ export const updateFlights = (flights) => {
   }
 }
 
+const LOAD_AIRPORTS = "LOAD_AIRPORTS";
+export const loadAirports = (airports) => {
+  return {
+    type: LOAD_AIRPORTS,
+    airports: airports,
+  }
+}
+
 const CHOOSE_FLIGHT = "CHOOSE_FLIGHT";
 export const chooseFlight = (flight) => {
   return {

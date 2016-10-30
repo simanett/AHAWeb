@@ -11,3 +11,7 @@ body {
 #flights{
     padding-top: 40px;
 }
+
+#flight-search label {
+    padding-left: 0;
+}
