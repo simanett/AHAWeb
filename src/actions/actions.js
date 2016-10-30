@@ -30,6 +30,14 @@ export const setPassenger = (passenger) => {
   }
 }
 
+const LOAD_AIRPLANE = "LOAD_AIRPLANE";
+export const loadAirplane = (airplane) => {
+  return {
+    type: LOAD_AIRPLANE,
+    airplane: airplane,
+  }
+}
+
 const SET_DEPARTURE_DATE = "SET_DEPARTURE_DATE";
 export const setDepartureDate = (departureDate) => {
   return {

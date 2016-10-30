@@ -41,6 +41,15 @@ export const airports = (state = [], action) => {
     }
 }
 
+export const airplane = (state = {}, action) => {
+    switch (action.type) {
+        case "LOAD_AIRPLANE":
+            return action.airplane
+        default:
+            return state
+    }
+}
+
 let initSearchDetailsState = {
     airportFrom: "",
     airportTo: "",

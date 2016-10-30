@@ -43,6 +43,22 @@ function getAirportsFromServlet() {
     });
 }
 
+function getAirplaneFromServlet(airplaneType) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            cache: false,
+            dataType: "json",
+            error: function (xhr, status, err) {
+                reject(err);
+            }.bind(this),
+            success: function (data) {
+                resolve(data);
+            }.bind(this),
+            url: "http://localhost:8080/AHAService/AirplaneServlet?action=getAirplaneByModel&model=" + airplaneType,
+        });
+    });
+}
+
 class Flights extends React.Component {
 
     componentDidMount() {
@@ -185,14 +201,19 @@ class Flights extends React.Component {
         }
         if (parent) {
             store.dispatch(Actions.chooseFlight(chosenFlight));
+            getAirplaneFromServlet(chosenFlight.airplane).then((result) => {
+                store.dispatch(Actions.loadAirplane(result));
+            });
+
         }
     }
 }
 
 export const ConnectedFlights = ReactRedux.connect(
     (state) => ({
-        flights: state.flights,
         airports: state.airports,
+        chosenFlight: state.chosenFlight,
+        flights: state.flights,
         searchDetails: state.searchDetails,
     })
 )(Flights);
