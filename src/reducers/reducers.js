@@ -32,3 +32,19 @@ export const passengerDetails = (state = initPassengerState, action) => {
     }
 }
 
+let initSearchDetailsState = {
+   from: "",
+   to: "",
+   departureDate: "",
+   arrivalDate: "",
+}
+export const searchDetails = (state = initSearchDetailsState, action) => {
+    switch (action.type) {
+        case "SET_DEPARTURE_DATE":
+            return Object.assign({}, state, {
+                departureDate: action.departureDate,
+            });
+        default:
+            return state
+    }
+}

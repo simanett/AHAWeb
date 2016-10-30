@@ -17,9 +17,11 @@
   "homepage": "",
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.3",
+    "moment": "^2.15.1",
     "node-sass": "^3.9.2",
     "react": "15.3.0",
     "react-bootstrap": "^0.30.5",
+    "react-datepicker": "^0.33.0",
     "react-dom": "15.3.0",
     "react-redux": "^4.4.5",
     "react-router": "^2.8.1",

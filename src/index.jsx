@@ -7,12 +7,13 @@ import { ConnectedApp } from './app.jsx';
 import { ConnectedLogin } from './components/login';
 import { ConnectedFlights } from './components/flights.jsx';
 import { combineReducers, createStore } from "redux";
-import { flights, chooseFlight, passengerDetails } from "./reducers/reducers";
+import { flights, chooseFlight, passengerDetails, searchDetails } from "./reducers/reducers";
 
 const rootReducer = combineReducers({
     flights: flights,
     chosenFlight: chooseFlight,
     passengerDetails: passengerDetails,
+    searchDetails: searchDetails,
 });
 
 export const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

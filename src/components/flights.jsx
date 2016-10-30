@@ -1,5 +1,9 @@
 import React from "react";
+import DatePicker from "react-datepicker";
+import moment from "moment";
 import * as $ from "jquery";
+import "react-datepicker/dist/react-datepicker.css";
+
 import { Table } from 'react-bootstrap';
 import * as ReactRedux from "react-redux";
 
@@ -31,10 +35,21 @@ class Flights extends React.Component {
         });
     }
 
+
     render() {
+        /*
+                var currentTime = moment().format("YYYY MM DD");
+                console.log('Current Time is ', currentTime);
+        */
+        let startDate = moment();
         return (
             <div id="flights">
                 <h2>Flights</h2>
+                <DatePicker
+                    selected={startDate}
+                    onChange={this.handleChange.bind(this) }
+                    />
+
                 {this.props.flights.length > 0 &&
                     <Table bordered hover responsive striped>
                         <thead>
@@ -69,6 +84,13 @@ class Flights extends React.Component {
                 }
             </div>
         );
+    }
+
+    handleChange(date) {
+        let formattedDate = date.format("YYYY MM DD");
+        console.log(formattedDate);
+        alert(formattedDate);
+        store.dispatch(Actions.setDepartureDate(formattedDate));
     }
 
     chooseFlight(event) {

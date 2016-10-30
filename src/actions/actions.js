@@ -21,3 +21,11 @@ export const setPassenger = (passenger) => {
     passengerDetails: passenger,
   }
 }
+
+const SET_DEPARTURE_DATE = "SET_DEPARTURE_DATE";
+export const setDepartureDate = (departureDate) => {
+  return {
+    type: SET_DEPARTURE_DATE,
+    departureDate: departureDate,
+  }
+}
