@@ -52,7 +52,7 @@ class Flights extends React.Component {
                         <tbody>
                             {this.props.flights.map((flight, index) => {
                                 return (
-                                    <tr key={index}>
+                                    <tr key={index} onClick={this.chooseFlight.bind(this)}>
                                         <td>{flight.id}</td>
                                         <td>{flight.flightNumber}</td>
                                         <td>{flight.departure}</td>
@@ -69,6 +69,26 @@ class Flights extends React.Component {
                 }
             </div>
         );
+    }
+
+    chooseFlight(event){
+        let value = event.target.parentElement.firstChild.textContent;
+        let parent = event.target.parentElement;
+        let chosenFlight = {};
+        chosenFlight.id = parent.cells.item(0).textContent;
+        chosenFlight.flightNumber = parent.cells.item(1).textContent;
+        chosenFlight.departure = parent.cells.item(2).textContent;
+        chosenFlight.flightDuration = parent.cells.item(3).textContent;
+        chosenFlight.airplane = parent.cells.item(4).textContent;
+        chosenFlight.airportFrom = parent.cells.item(5).textContent;
+        chosenFlight.airportTo = parent.cells.item(6).textContent;
+        chosenFlight.basicPrice = parent.cells.item(7).textContent;
+        
+        if(parent){
+            alert("flight chosen" + chosenFlight.id);
+            store.dispatch(Actions.chooseFlight(chosenFlight));
+            // alert("flight chosen" + parent.cells.length);
+        }
     }
 }
 

@@ -9,3 +9,21 @@ export const flights = (state = [], action) => {
     }
 }
 
+export const chooseFlight = (state = {}, action) => {
+    switch (action.type) {
+        case "CHOOSE_FLIGHT":
+            return action.chosenFlight
+        default:
+            return state
+    }
+}
+
+export const passengerDetails = (state = {}, action) => {
+    switch (action.type) {
+        case "SET_PASSENGER":
+            return action.passengerDetails
+        default:
+            return state
+    }
+}
+
