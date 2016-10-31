@@ -15,9 +15,9 @@ function getAirportsFromServlet() {
     return new Promise((resolve, reject) => {
         $.ajax({
             cache: false,
-            dataType: "json",
+            dataType: "jsonp",
             error: function (xhr, status, err) {
-                reject(err);
+                reject(xhr.status);
             }.bind(this),
             success: function (data) {
                 resolve(data);
@@ -28,10 +28,12 @@ function getAirportsFromServlet() {
 }
 
 class FlightsFilter extends React.Component {
-    
+
     componentDidMount() {
         getAirportsFromServlet().then((result) => {
             store.dispatch(Actions.loadAirports(result))
+        }).catch((error) => {
+            console.log(error);
         });
         store.dispatch(Actions.setDepartureDate(moment().format("YYYY MM DD")));
         store.dispatch(Actions.setArrivalDate(moment().format("YYYY MM DD")));
@@ -42,24 +44,25 @@ class FlightsFilter extends React.Component {
     render() {
         let startDate = moment();
         return (
-                <div className="form-group row" id="flight-search">
-                    <div className="col-sm-3">
-                        <label className="col-sm-12" >Departure: </label>
-                        <DatePicker
-                            className = "form-control"
-                            selected = {moment(this.props.searchDetails.departureDate, "YYYY MM DD") }
-                            onChange={this.setDepartureDate.bind(this) }
-                            />
-                    </div>
-                    <div className="col-sm-3">
-                        <label className="col-sm-12" >Arrival: </label>
-                        <DatePicker
-                            className = "form-control"
-                            selected = {moment(this.props.searchDetails.arrivalDate, "YYYY MM DD") }
-                            onChange={this.setArrivalDate.bind(this) }
-                            />
-                    </div>
-                    {this.props.airports.length > 0 &&
+            <div className="form-group row" id="flight-search">
+                {this.props.airports.length > 0 &&
+                    <div>
+                        <div className="col-sm-3">
+                            <label className="col-sm-12" >Departure: </label>
+                            <DatePicker
+                                className = "form-control"
+                                selected = {moment(this.props.searchDetails.departureDate, "YYYY MM DD") }
+                                onChange={this.setDepartureDate.bind(this) }
+                                />
+                        </div>
+                        <div className="col-sm-3">
+                            <label className="col-sm-12" >Arrival: </label>
+                            <DatePicker
+                                className = "form-control"
+                                selected = {moment(this.props.searchDetails.arrivalDate, "YYYY MM DD") }
+                                onChange={this.setArrivalDate.bind(this) }
+                                />
+                        </div>
                         <div className="col-sm-3">
                             <label className="col-sm-12" >From: </label>
                             <select
@@ -73,8 +76,6 @@ class FlightsFilter extends React.Component {
                                 }) }
                             </select>
                         </div>
-                    }
-                    {this.props.airports.length > 0 &&
                         <div className="col-sm-3">
                             <label className="col-sm-12" >To: </label>
                             <select
@@ -92,8 +93,12 @@ class FlightsFilter extends React.Component {
                                 }) }
                             </select>
                         </div>
-                    }
-               </div>
+                    </div>
+                }
+                {this.props.airports.length === 0 &&
+                    <p className="col-sm-12">Database unavailable.Please check back later.</p>}
+            </div>
+
         );
     }
 

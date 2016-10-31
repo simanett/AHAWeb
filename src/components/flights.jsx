@@ -11,9 +11,9 @@ function getFlightsFromServlet() {
     return new Promise((resolve, reject) => {
         $.ajax({
             cache: false,
-            dataType: "json",
+            dataType: "jsonp",
             error: function (xhr, status, err) {
-                reject(err);
+                reject(xhr.status);
             }.bind(this),
             success: function (data) {
                 resolve(data);
@@ -27,9 +27,9 @@ function getAirplaneFromServlet(airplaneType) {
     return new Promise((resolve, reject) => {
         $.ajax({
             cache: false,
-            dataType: "json",
+            dataType: "jsonp",
             error: function (xhr, status, err) {
-                reject(err);
+                reject(xhr.status);
             }.bind(this),
             success: function (data) {
                 resolve(data);
@@ -44,6 +44,8 @@ class Flights extends React.Component {
     componentDidMount() {
         getFlightsFromServlet().then((result) => {
             store.dispatch(Actions.updateFlights(result))
+        }).catch((error) => {
+            console.log(error);
         });
     }
 
@@ -105,11 +107,13 @@ class Flights extends React.Component {
             store.dispatch(Actions.chooseFlight(chosenFlight));
             getAirplaneFromServlet(chosenFlight.airplane).then((result) => {
                 store.dispatch(Actions.loadAirplane(result));
+            }).catch((error) => {
+                console.log(error);
             });
 
         }
     }
-    
+
 }
 
 export const ConnectedFlights = ReactRedux.connect(
