@@ -37,7 +37,6 @@ class FlightsFilter extends React.Component {
         store.dispatch(Actions.setDepartureDate(moment().format("YYYY MM DD")));
         store.dispatch(Actions.setArrivalDate(moment().format("YYYY MM DD")));
         store.dispatch(Actions.setAirportFrom("Budapest"));
-        // store.dispatch(Actions.setAirportTo("Budapest"));
     }
 
     render() {
@@ -125,7 +124,6 @@ class FlightsFilter extends React.Component {
     }
 
     setAirportTo(event) {
-        // store.dispatch(Actions.setErrorMessage(""));
         this.validateFilterOptions();
         let airportTo = event.target.value;
         store.dispatch(Actions.setAirportTo(airportTo));
