@@ -14,5 +14,8 @@ class SeatBooking extends React.Component {
 export const ConnectedSeatBooking = ReactRedux.connect(
     (state) => ({
         chosenFlight: state.chosenFlight,
+        chosenAirplaneType: state.chosenAirplaneType,
+        errorMessage: state.errorMessage,
+        passengerDetails: state.passengerDetails,
     })
 )(SeatBooking);
