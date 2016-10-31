@@ -7,6 +7,7 @@ import "../css/aha.css";
 import { store } from "../index";
 import { Table, Button } from "react-bootstrap";
 import { ConnectedFlightsFilter } from "./flightsFilter";
+import { ConnectedErrorMessage } from "./flightsFilter";
 
 function getFlightsFromServlet() {
     return new Promise((resolve, reject) => {
@@ -56,6 +57,9 @@ class Flights extends React.Component {
         return (
             <div id="flights">
                 <h2>Flights</h2>
+                { this.props.errorMessage &&
+                    <ErrorMessage />
+                }
                 <ConnectedFlightsFilter />
                 {this.props.flights.length > 0 &&
                     <div>
@@ -125,6 +129,7 @@ export const ConnectedFlights = ReactRedux.connect(
     (state) => ({
         airports: state.airports,
         chosenFlight: state.chosenFlight,
+        errorMessage: state.ErrorMessage,
         flights: state.flights,
         searchDetails: state.searchDetails,
     })

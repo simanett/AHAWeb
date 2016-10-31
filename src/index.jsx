@@ -7,13 +7,14 @@ import { ConnectedApp } from './app.jsx';
 import { ConnectedLogin } from './components/login';
 import { ConnectedFlights } from './components/flights.jsx';
 import { combineReducers, createStore } from "redux";
-import { flights, airports, airplane, chooseFlight, passengerDetails, searchDetails } from "./reducers/reducers";
+import { flights, airports, airplane, chooseFlight, errorMessage, passengerDetails, searchDetails } from "./reducers/reducers";
 
 const rootReducer = combineReducers({
     flights: flights,
     airports: airports,
-    chosenFlight: chooseFlight,
     chosenAirplaneType: airplane,
+    chosenFlight: chooseFlight,
+    errorMessage: errorMessage,
     passengerDetails: passengerDetails,
     searchDetails: searchDetails,
 });

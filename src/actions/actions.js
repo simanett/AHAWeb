@@ -1,3 +1,11 @@
+const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";
+export const setErrorMessage = (errorMessage) => {
+  return {
+    type: SET_ERROR_MESSAGE,
+    errorMessage: errorMessage,
+  }
+}
+
 const LOAD_FLIGHTS = "LOAD_FLIGHTS";
 export const updateFlights = (flights) => {
   return {
