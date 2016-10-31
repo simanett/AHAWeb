@@ -1,8 +1,8 @@
 import React from "react";
 import DatePicker from "react-datepicker";
 import moment from "moment";
-import * as $ from "jquery";
 import "react-datepicker/dist/react-datepicker.css";
+import * as $ from "jquery";
 import * as ReactRedux from "react-redux";
 import * as Actions from "../actions/actions";
 
@@ -34,8 +34,8 @@ class FlightsFilter extends React.Component {
         }).catch((error) => {
             console.log(error);
         });
-        store.dispatch(Actions.setDepartureDate(moment().format("YYYYMMDD")));
-        store.dispatch(Actions.setArrivalDate(moment().format("YYYYMMDD")));
+        store.dispatch(Actions.setDepartureDate(moment().format("YYYYMMDDhhmmss")));
+        store.dispatch(Actions.setArrivalDate(moment().format("YYYYMMDDhhmmss")));
         store.dispatch(Actions.setAirportFrom("Budapest"));
     }
 
@@ -48,7 +48,7 @@ class FlightsFilter extends React.Component {
                         <label className="col-sm-12" >Departure: </label>
                         <DatePicker
                             className = "form-control"
-                            selected = {moment(this.props.searchDetails.departureDate, "YYYYMMDD") }
+                            selected = {moment(this.props.searchDetails.departureDate, "YYYYMMDDhhmmss") }
                             onChange={this.setDepartureDate.bind(this) }
                             />
                     </div>
@@ -56,7 +56,7 @@ class FlightsFilter extends React.Component {
                         <label className="col-sm-12" >Arrival: </label>
                         <DatePicker
                             className = "form-control"
-                            selected = {moment(this.props.searchDetails.arrivalDate, "YYYYMMDD") }
+                            selected = {moment(this.props.searchDetails.arrivalDate, "YYYYMMDDhhmmss") }
                             onChange={this.setArrivalDate.bind(this) }
                             />
                     </div>
@@ -107,12 +107,12 @@ class FlightsFilter extends React.Component {
     }
 
     setDepartureDate(date) {
-        let formattedDate = date.format("YYYYMMDD");
+        let formattedDate = date.format("YYYYMMDDhhmmss");
         store.dispatch(Actions.setDepartureDate(formattedDate));
     }
 
     setArrivalDate(date) {
-        let formattedDate = date.format("YYYYMMDD");
+        let formattedDate = date.format("YYYYMMDDhhmmss");
         store.dispatch(Actions.setArrivalDate(formattedDate));
     }
 

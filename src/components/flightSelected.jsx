@@ -1,5 +1,6 @@
 import React from "react";
 import * as ReactRedux from "react-redux";
+import moment from "moment";
 import { Button, Panel } from "react-bootstrap";
 
 import * as Actions from "../actions/actions";

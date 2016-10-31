@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+require("moment/locale/hu");
 import * as $ from "jquery";
 import * as ReactRedux from "react-redux";
 import * as Actions from "../actions/actions";
@@ -48,7 +49,16 @@ class Flights extends React.Component {
 
     componentDidMount() {
         getFlightsFromServlet().then((result) => {
-            store.dispatch(Actions.updateFlights(result))
+            let formattedFlights = result.map((flight) => {
+                return (
+                    Object.assign({}, flight, {
+                        departure: moment(flight.departure, "MMM. DD, YYYY").format("YYYYMMDDhhmmss"),
+                    })
+                )
+            });
+            // alert(result[0].departure + " : " + formattedFlights[0].departure);
+            // store.dispatch(Actions.updateFlights(result))
+            store.dispatch(Actions.updateFlights(formattedFlights))
         }).catch((error) => {
             console.log(error);
         });
@@ -101,7 +111,7 @@ class Flights extends React.Component {
                         </Table>
                     </div>
                 }
-                {this.props.seatBookingRequested && 
+                {this.props.seatBookingRequested &&
                     <ConnectedSeatBooking />
                 }
             </div>
