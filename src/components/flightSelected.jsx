@@ -24,7 +24,7 @@ class FlightSelected extends React.Component {
                         </thead>
                         <tbody>
                             <tr className="info">
-                                <td>{this.props.chosenFlight.departure}</td>
+                                <td>{moment(this.props.chosenFlight.departure, "YYYYMMDDhhmmss").format("DD/MM/YYYY hh:mm:ss")}</td>
                                 <td>{this.props.chosenFlight.arrival}</td>
                                 <td>{this.props.chosenFlight.airportFrom}</td>
                                 <td>{this.props.chosenFlight.airportTo}</td>
