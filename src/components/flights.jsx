@@ -8,6 +8,9 @@ import { store } from "../index";
 import { Table, Button } from "react-bootstrap";
 import { ConnectedFlightsFilter } from "./flightsFilter";
 import { ConnectedErrorMessage } from "./errorMessage";
+import { ConnectedFlightSelected } from "./flightSelected";
+import { ConnectedSeatBooking } from "./seatBooking";
+
 
 function getFlightsFromServlet() {
     return new Promise((resolve, reject) => {
@@ -52,18 +55,20 @@ class Flights extends React.Component {
     }
 
     render() {
-
         return (
             <div id="flights">
-                <h2>Flights</h2>
+                <h2>Flight booking</h2>
                 { this.props.errorMessage.length > 0 &&
                     <ConnectedErrorMessage />
                 }
                 {this.props.airports.length === 0 &&
                     <p className="col-sm-12">Database unavailable.Please check back later.</p>}
-                {this.props.flights.length > 0 &&
+                {this.props.flights.length > 0 && !this.props.seatBookingRequested &&
                     <div>
                         <ConnectedFlightsFilter />
+                        { this.props.chosenFlight.id !== undefined &&
+                            <ConnectedFlightSelected />
+                        }
                         <Table bordered hover responsive striped id="flight-list">
                             <thead>
                                 <tr>
@@ -94,23 +99,13 @@ class Flights extends React.Component {
                                 }) }
                             </tbody>
                         </Table>
-                        <Button bsStyle="primary"
-                            onClick={this.handleSelectFlight.bind(this) }>Select flight</Button>
                     </div>
+                }
+                {this.props.seatBookingRequested && 
+                    <ConnectedSeatBooking />
                 }
             </div>
         );
-    }
-
-    handleSelectFlight() {
-        let errorMessage = "";
-        let airportFrom = document.getElementById("airport-from").value;
-        let airportTo = document.getElementById("airport-to").value;
-        if (airportFrom === airportTo) {
-            errorMessage += "Sorry, we don't fly from " + airportFrom + " to " + airportTo + ".";
-        }
-        store.dispatch(Actions.setErrorMessage(errorMessage));
-        // let checkedAirports = this.props.airports.filter((airport) => { return airport.city !== document.getElementById("airport-from").value })
     }
 
     chooseFlight(event) {
@@ -145,5 +140,6 @@ export const ConnectedFlights = ReactRedux.connect(
         errorMessage: state.errorMessage,
         flights: state.flights,
         searchDetails: state.searchDetails,
+        seatBookingRequested: state.seatBookingRequested,
     })
 )(Flights);

@@ -77,3 +77,11 @@ export const setAirportTo = (airportTo) => {
     airportTo: airportTo,
   }
 }
+
+const SEAT_BOOKING_REQUESTED = "SEAT_BOOKING_REQUESTED";
+export const seatBookingRequested = (seatBookingRequested) => {
+  return {
+    type: SEAT_BOOKING_REQUESTED,
+    seatBookingRequested: seatBookingRequested,
+  }
+}

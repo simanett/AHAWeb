@@ -59,6 +59,15 @@ export const airplane = (state = {}, action) => {
     }
 }
 
+export const seatBookingRequested = (state = false, action) => {
+    switch (action.type) {
+        case "SEAT_BOOKING_REQUESTED":
+            return action.seatBookingRequested
+        default:
+            return state
+    }
+}
+
 let initSearchDetailsState = {
     airportFrom: "",
     airportTo: "",
