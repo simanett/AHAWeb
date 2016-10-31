@@ -1,9 +1,9 @@
 import React from 'react';
 import * as ReactRedux from 'react-redux';
-import './css/aha.css';
-import './css/login.css';
-import Navbar from './components/navbar';
-import Login from './components/login';
+import "./css/aha.css";
+import "./css/login.css";
+import Navbar from "./components/navbar";
+import Login from "./components/login";
 
 class App extends React.Component {
   render() {

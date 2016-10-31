@@ -12,6 +12,12 @@ body {
     padding-top: 40px;
 }
 
-#flight-search label {
-    padding-left: 0;
+/***/
+
+#aha-app .table-responsive {
+    max-height: 100px 0 !important;
+}
+
+#aha-app #flight-search label.col-sm-12 {
+    padding-left: 0 !important;
 }

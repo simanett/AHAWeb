@@ -3,19 +3,17 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 import * as $ from "jquery";
 import "react-datepicker/dist/react-datepicker.css";
-
-// import { Table } from 'react-bootstrap';
 import * as ReactRedux from "react-redux";
-
 import * as Actions from "../actions/actions";
 
+import "../css/aha.css";
 import { store } from "../index";
 
 function getAirportsFromServlet() {
     return new Promise((resolve, reject) => {
         $.ajax({
             cache: false,
-            dataType: "jsonp",
+            dataType: "json",
             error: function (xhr, status, err) {
                 reject(xhr.status);
             }.bind(this),
@@ -31,6 +29,7 @@ class FlightsFilter extends React.Component {
 
     componentDidMount() {
         getAirportsFromServlet().then((result) => {
+            console.log(result);
             store.dispatch(Actions.loadAirports(result))
         }).catch((error) => {
             console.log(error);
@@ -98,7 +97,6 @@ class FlightsFilter extends React.Component {
                 {this.props.airports.length === 0 &&
                     <p className="col-sm-12">Database unavailable.Please check back later.</p>}
             </div>
-
         );
     }
 
