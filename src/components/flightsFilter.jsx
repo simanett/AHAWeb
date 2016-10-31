@@ -37,7 +37,7 @@ class FlightsFilter extends React.Component {
         store.dispatch(Actions.setDepartureDate(moment().format("YYYY MM DD")));
         store.dispatch(Actions.setArrivalDate(moment().format("YYYY MM DD")));
         store.dispatch(Actions.setAirportFrom("Budapest"));
-        store.dispatch(Actions.setAirportTo("Budapest"));
+        // store.dispatch(Actions.setAirportTo("Budapest"));
     }
 
     render() {
@@ -66,7 +66,7 @@ class FlightsFilter extends React.Component {
                             <label className="col-sm-12" >From: </label>
                             <select
                                 className="form-control"
-                                id="airportFrom"
+                                id="airport-from"
                                 onChange={this.setAirportFrom.bind(this) }>
                                 {this.props.airports.map((airport, index) => {
                                     return (
@@ -77,20 +77,46 @@ class FlightsFilter extends React.Component {
                         </div>
                         <div className="col-sm-3">
                             <label className="col-sm-12" >To: </label>
-                            <select
-                                className="form-control"
-                                id="airportTo"
-                                onChange={this.setAirportTo.bind(this) }>
-                                {this.props.airports.map((airport, index) => {
-                                    return (
-                                        <option
-                                            key={index}
-                                            value ={airport.city}
-                                            >{airport.city}
-                                        </option>
-                                    )
-                                }) }
-                            </select>
+                            {this.props.searchDetails.airportTo === "" &&
+                                <select
+                                    className="form-control"
+                                    id="airport-to"
+                                    onChange={this.setAirportTo.bind(this) }>
+                                    <option
+                                        key="selectDestination"
+                                        value = ""
+                                        selected
+                                        disabled
+                                        >Select destination
+                                    </option>
+                                    {this.props.airports.map((airport, index) => {
+                                        return (
+                                            <option
+                                                key={index}
+                                                value ={airport.city}
+                                                >{airport.city}
+                                            </option>
+                                        )
+                                    }) }
+                                </select>
+                            }
+                            {this.props.searchDetails.airportTo !== "" &&
+                                <select
+                                    className="form-control"
+                                    id="airport-to"
+                                    onChange={this.setAirportTo.bind(this) }>
+                                    {this.props.airports.map((airport, index) => {
+                                        return (
+                                            <option
+                                                key={index}
+                                                value ={airport.city}
+                                                >{airport.city}
+                                            </option>
+                                        )
+                                    }) }
+                                </select>
+                            }
+
                         </div>
                     </div>
                 }

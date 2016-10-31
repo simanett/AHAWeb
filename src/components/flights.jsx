@@ -7,7 +7,7 @@ import "../css/aha.css";
 import { store } from "../index";
 import { Table, Button } from "react-bootstrap";
 import { ConnectedFlightsFilter } from "./flightsFilter";
-import { ConnectedErrorMessage } from "./flightsFilter";
+import { ConnectedErrorMessage } from "./errorMessage";
 
 function getFlightsFromServlet() {
     return new Promise((resolve, reject) => {
@@ -57,8 +57,8 @@ class Flights extends React.Component {
         return (
             <div id="flights">
                 <h2>Flights</h2>
-                { this.props.errorMessage &&
-                    <ErrorMessage />
+                { this.props.errorMessage.length > 0 &&
+                    <ConnectedErrorMessage />
                 }
                 <ConnectedFlightsFilter />
                 {this.props.flights.length > 0 &&
@@ -93,11 +93,23 @@ class Flights extends React.Component {
                                 }) }
                             </tbody>
                         </Table>
-                        <Button bsStyle="primary">Book flight</Button>
+                        <Button bsStyle="primary" 
+                        onClick={this.handleSelectFlight.bind(this)}>Select flight</Button>
                     </div>
                 }
             </div>
         );
+    }
+
+    handleSelectFlight() {
+        let errorMessage = "";
+        let airportFrom = document.getElementById("airport-from").value;
+        let airportTo = document.getElementById("airport-to").value;
+        if(airportFrom === airportTo){
+            errorMessage += "Sorry, we don't fly from " + airportFrom + " to " + airportTo + ".";
+        }
+        store.dispatch(Actions.setErrorMessage(errorMessage));
+    // let checkedAirports = this.props.airports.filter((airport) => { return airport.city !== document.getElementById("airport-from").value })
     }
 
     chooseFlight(event) {
@@ -129,7 +141,7 @@ export const ConnectedFlights = ReactRedux.connect(
     (state) => ({
         airports: state.airports,
         chosenFlight: state.chosenFlight,
-        errorMessage: state.ErrorMessage,
+        errorMessage: state.errorMessage,
         flights: state.flights,
         searchDetails: state.searchDetails,
     })
