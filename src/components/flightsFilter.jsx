@@ -28,8 +28,8 @@ function getAirportsFromServlet() {
 class FlightsFilter extends React.Component {
 
     componentDidMount() {
+        store.dispatch(Actions.setErrorMessage(""));
         getAirportsFromServlet().then((result) => {
-            console.log(result);
             store.dispatch(Actions.loadAirports(result))
         }).catch((error) => {
             console.log(error);
@@ -44,84 +44,66 @@ class FlightsFilter extends React.Component {
         let startDate = moment();
         return (
             <div className="form-group row" id="flight-search">
-                {this.props.airports.length > 0 &&
-                    <div>
-                        <div className="col-sm-3">
-                            <label className="col-sm-12" >Departure: </label>
-                            <DatePicker
-                                className = "form-control"
-                                selected = {moment(this.props.searchDetails.departureDate, "YYYY MM DD") }
-                                onChange={this.setDepartureDate.bind(this) }
-                                />
-                        </div>
-                        <div className="col-sm-3">
-                            <label className="col-sm-12" >Arrival: </label>
-                            <DatePicker
-                                className = "form-control"
-                                selected = {moment(this.props.searchDetails.arrivalDate, "YYYY MM DD") }
-                                onChange={this.setArrivalDate.bind(this) }
-                                />
-                        </div>
-                        <div className="col-sm-3">
-                            <label className="col-sm-12" >From: </label>
-                            <select
-                                className="form-control"
-                                id="airport-from"
-                                onChange={this.setAirportFrom.bind(this) }>
-                                {this.props.airports.map((airport, index) => {
+                <div>
+                    <div className="col-sm-3">
+                        <label className="col-sm-12" >Departure: </label>
+                        <DatePicker
+                            className = "form-control"
+                            selected = {moment(this.props.searchDetails.departureDate, "YYYY MM DD") }
+                            onChange={this.setDepartureDate.bind(this) }
+                            />
+                    </div>
+                    <div className="col-sm-3">
+                        <label className="col-sm-12" >Arrival: </label>
+                        <DatePicker
+                            className = "form-control"
+                            selected = {moment(this.props.searchDetails.arrivalDate, "YYYY MM DD") }
+                            onChange={this.setArrivalDate.bind(this) }
+                            />
+                    </div>
+                    <div className="col-sm-3">
+                        <label className="col-sm-12" >From: </label>
+                        <select
+                            className="form-control"
+                            id="airport-from"
+                            onChange={this.setAirportFrom.bind(this) }>
+                            {this.props.airports.map((airport, index) => {
+                                return (
+                                    <option key={index} >{airport.city}</option>
+                                )
+                            }) }
+                        </select>
+                    </div>
+                    <div className="col-sm-3">
+                        <label className="col-sm-12" >To: </label>
+
+                        <select
+                            className="form-control"
+                            id="airport-to"
+                            onChange={this.setAirportTo.bind(this) }>
+                            {this.props.searchDetails.airportTo === "" &&
+                                <option
+                                    key="selectDestination"
+                                    value = ""
+                                    selected
+                                    disabled
+                                    >Select destination
+                                </option>
+                            }
+                            {this.props.airports
+                                /*.filter((airport1) => { return airport1.city !== document.getElementById("airport-from").value })*/
+                                .map((airport, index) => {
                                     return (
-                                        <option key={index} >{airport.city}</option>
+                                        <option
+                                            key={index}
+                                            value ={airport.city}
+                                            >{airport.city}
+                                        </option>
                                     )
                                 }) }
-                            </select>
-                        </div>
-                        <div className="col-sm-3">
-                            <label className="col-sm-12" >To: </label>
-                            {this.props.searchDetails.airportTo === "" &&
-                                <select
-                                    className="form-control"
-                                    id="airport-to"
-                                    onChange={this.setAirportTo.bind(this) }>
-                                    <option
-                                        key="selectDestination"
-                                        value = ""
-                                        selected
-                                        disabled
-                                        >Select destination
-                                    </option>
-                                    {this.props.airports.map((airport, index) => {
-                                        return (
-                                            <option
-                                                key={index}
-                                                value ={airport.city}
-                                                >{airport.city}
-                                            </option>
-                                        )
-                                    }) }
-                                </select>
-                            }
-                            {this.props.searchDetails.airportTo !== "" &&
-                                <select
-                                    className="form-control"
-                                    id="airport-to"
-                                    onChange={this.setAirportTo.bind(this) }>
-                                    {this.props.airports.map((airport, index) => {
-                                        return (
-                                            <option
-                                                key={index}
-                                                value ={airport.city}
-                                                >{airport.city}
-                                            </option>
-                                        )
-                                    }) }
-                                </select>
-                            }
-
-                        </div>
+                        </select>
                     </div>
-                }
-                {this.props.airports.length === 0 &&
-                    <p className="col-sm-12">Database unavailable.Please check back later.</p>}
+                </div>
             </div>
         );
     }
@@ -137,13 +119,26 @@ class FlightsFilter extends React.Component {
     }
 
     setAirportFrom(event) {
+        this.validateFilterOptions();
         let airportFrom = event.target.value;
         store.dispatch(Actions.setAirportFrom(airportFrom));
     }
 
     setAirportTo(event) {
+        // store.dispatch(Actions.setErrorMessage(""));
+        this.validateFilterOptions();
         let airportTo = event.target.value;
         store.dispatch(Actions.setAirportTo(airportTo));
+    }
+
+    validateFilterOptions() {
+        let errorMessage = "";
+        let airportFrom = document.getElementById("airport-from").value;
+        let airportTo = document.getElementById("airport-to").value;
+        if (airportFrom === airportTo) {
+            errorMessage += "Sorry, we don't fly from " + airportFrom + " to " + airportTo + ".";
+        }
+        store.dispatch(Actions.setErrorMessage(errorMessage));
     }
 
 }
@@ -151,6 +146,7 @@ class FlightsFilter extends React.Component {
 export const ConnectedFlightsFilter = ReactRedux.connect(
     (state) => ({
         airports: state.airports,
+        errorMessage: state.errorMessage,
         searchDetails: state.searchDetails,
     })
 )(FlightsFilter);

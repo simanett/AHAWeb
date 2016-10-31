@@ -45,7 +45,6 @@ class Flights extends React.Component {
 
     componentDidMount() {
         getFlightsFromServlet().then((result) => {
-            console.log(result);
             store.dispatch(Actions.updateFlights(result))
         }).catch((error) => {
             console.log(error);
@@ -60,9 +59,11 @@ class Flights extends React.Component {
                 { this.props.errorMessage.length > 0 &&
                     <ConnectedErrorMessage />
                 }
-                <ConnectedFlightsFilter />
+                {this.props.airports.length === 0 &&
+                    <p className="col-sm-12">Database unavailable.Please check back later.</p>}
                 {this.props.flights.length > 0 &&
                     <div>
+                        <ConnectedFlightsFilter />
                         <Table bordered hover responsive striped id="flight-list">
                             <thead>
                                 <tr>
@@ -93,8 +94,8 @@ class Flights extends React.Component {
                                 }) }
                             </tbody>
                         </Table>
-                        <Button bsStyle="primary" 
-                        onClick={this.handleSelectFlight.bind(this)}>Select flight</Button>
+                        <Button bsStyle="primary"
+                            onClick={this.handleSelectFlight.bind(this) }>Select flight</Button>
                     </div>
                 }
             </div>
@@ -105,11 +106,11 @@ class Flights extends React.Component {
         let errorMessage = "";
         let airportFrom = document.getElementById("airport-from").value;
         let airportTo = document.getElementById("airport-to").value;
-        if(airportFrom === airportTo){
+        if (airportFrom === airportTo) {
             errorMessage += "Sorry, we don't fly from " + airportFrom + " to " + airportTo + ".";
         }
         store.dispatch(Actions.setErrorMessage(errorMessage));
-    // let checkedAirports = this.props.airports.filter((airport) => { return airport.city !== document.getElementById("airport-from").value })
+        // let checkedAirports = this.props.airports.filter((airport) => { return airport.city !== document.getElementById("airport-from").value })
     }
 
     chooseFlight(event) {
