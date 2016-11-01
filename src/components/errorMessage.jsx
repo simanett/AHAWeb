@@ -10,7 +10,7 @@ class ErrorMessage extends React.Component {
 
     render() {
         return (
-            <div id="error-message-outer" className="col-sm-12 warning">
+            <div id="error-message-outer" className="row warning">
                 <div id="error-message-inner"
                     className="col-sm-12 bordered"
                     title="Click or hit escape to dismiss this message."

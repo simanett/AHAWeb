@@ -41,7 +41,7 @@ class FlightsFilter extends React.Component {
 
     render() {
         return (
-            <div className="form-group row" id="flight-search">
+            <div className="form-group" id="flight-search">
                 <div>
                     <Panel>
                         <div className="col-sm-3">
@@ -106,10 +106,17 @@ class FlightsFilter extends React.Component {
     }
 
     handleFlightSearch() {
-
-        this.loadFlightsByFilterDetails("2016-11-15", "Budapest", "Nantes").then((resolve) => {
-            alert("success");
-        }).catch((err) => { alert(err) });
+        if (this.props.errorMessage === "") {
+            if (document.getElementById("airport-to").value === "") {
+                store.dispatch(Actions.setErrorMessage("Please select a destination airport"));
+            } else {
+                this.loadFlightsByFilterDetails("2016-11-15", "Budapest", "Nantes").then((resolve) => {
+                    alert("success");
+                }).catch((err) => { alert(err) });
+            }
+        } else {
+            alert("there are errors");
+        }
         /*
         alert(
             moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ").format("YYYY-MM-DD") 
@@ -118,36 +125,42 @@ class FlightsFilter extends React.Component {
         */
     }
 
-    loadFlightsByFilterDetails(departure, airportFrom, airportTo){
+    loadFlightsByFilterDetails(departure, airportFrom, airportTo) {
         let startSearchDay = moment(departure, "YYYY-MM-DDThh:mmZ").format("YYYY-MM-DD");
         let endSearchDay = moment(departure, "YYYY-MM-DDThh:mmZ").add(2, "d").format("YYYY-MM-DD");
         return new Promise((resolve, reject) => {
-        $.ajax({
-            cache: false,
-            dataType: "json",
-            error: function (xhr, status, err) {
-                console.log(xhr.status);
-                console.log(this.url);
-                reject(xhr.status);
-            }.bind(this),
-            success: function (data) {
-                resolve(data);
-            }.bind(this),
-            url: "http://localhost:8080/AHAService/FlightServlet?action=getFilteredFlights&from=Budapest&to=Nantes&start=2016-11-15&end=2016-11-17",
-            // url: "http://localhost:8080/AHAService/FlightServlet?action=getFlights",
-            /*
-            url: "http://localhost:8080/AHAService/FlightServlet?action=getFilteredFlights&from=" + airportFrom
-            + "&to=" + airportTo 
-            + "&start=" + startSearchDay 
-            + "&end=" + endSearchDay,
-            */
+            $.ajax({
+                cache: false,
+                dataType: "json",
+                error: function (xhr, status, err) {
+                    console.log(xhr.status);
+                    console.log(this.url);
+                    reject(xhr.status);
+                }.bind(this),
+                success: function (data) {
+                    resolve(data);
+                }.bind(this),
+                url: "http://localhost:8080/AHAService/FlightServlet?action=getFilteredFlights&from=Budapest&to=Nantes&start=2016-11-15&end=2016-11-17",
+                // url: "http://localhost:8080/AHAService/FlightServlet?action=getFlights",
+                /*
+                url: "http://localhost:8080/AHAService/FlightServlet?action=getFilteredFlights&from=" + airportFrom
+                + "&to=" + airportTo 
+                + "&start=" + startSearchDay 
+                + "&end=" + endSearchDay,
+                */
+            });
         });
-    });
     }
 
     setDepartureDate(date) {
+        this.validateFilterOptions();
         let formattedDate = date.format("YYYY-MM-DDThh:mmZ");
-        store.dispatch(Actions.setDepartureDate(formattedDate));
+        if (date < moment()) {
+            store.dispatch(Actions.setDepartureDate(moment()));
+            store.dispatch(Actions.setErrorMessage("Past dates cannot be chosen. Please select a valid date."));
+        } else {
+            store.dispatch(Actions.setDepartureDate(formattedDate));
+        }
     }
 
     setAirportFrom(event) {
