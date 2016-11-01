@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-require("moment/locale/hu");
+// require("moment/locale/hu");
 import * as $ from "jquery";
 import * as ReactRedux from "react-redux";
 import * as Actions from "../actions/actions";
@@ -52,7 +52,7 @@ class Flights extends React.Component {
             let formattedFlights = result.map((flight) => {
                 return (
                     Object.assign({}, flight, {
-                        departure: moment(flight.departure, "MMM. DD, YYYY").format("YYYYMMDDhhmmss"),
+                        departure: moment(flight.departure, "YYYY-MM-DDThh:mmZ").format("DD/MM/YYYY hh:mm"),
                     })
                 )
             });

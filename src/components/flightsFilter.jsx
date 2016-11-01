@@ -34,8 +34,8 @@ class FlightsFilter extends React.Component {
         }).catch((error) => {
             console.log(error);
         });
-        store.dispatch(Actions.setDepartureDate(moment().format("YYYYMMDDhhmmss")));
-        store.dispatch(Actions.setArrivalDate(moment().format("YYYYMMDDhhmmss")));
+        store.dispatch(Actions.setDepartureDate(moment().format("YYYY-MM-DDThh:mmZ")));
+        store.dispatch(Actions.setArrivalDate(moment().format("YYYY-MM-DDThh:mmZ")));
         store.dispatch(Actions.setAirportFrom("Budapest"));
     }
 
@@ -48,7 +48,7 @@ class FlightsFilter extends React.Component {
                         <label className="col-sm-12" >Departure: </label>
                         <DatePicker
                             className = "form-control"
-                            selected = {moment(this.props.searchDetails.departureDate, "YYYYMMDDhhmmss") }
+                            selected = {moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ") }
                             onChange={this.setDepartureDate.bind(this) }
                             />
                     </div>
@@ -56,7 +56,7 @@ class FlightsFilter extends React.Component {
                         <label className="col-sm-12" >Arrival: </label>
                         <DatePicker
                             className = "form-control"
-                            selected = {moment(this.props.searchDetails.arrivalDate, "YYYYMMDDhhmmss") }
+                            selected = {moment(this.props.searchDetails.arrivalDate, "YYYY-MM-DDThh:mmZ") }
                             onChange={this.setArrivalDate.bind(this) }
                             />
                     </div>
@@ -107,12 +107,12 @@ class FlightsFilter extends React.Component {
     }
 
     setDepartureDate(date) {
-        let formattedDate = date.format("YYYYMMDDhhmmss");
+        let formattedDate = date.format("YYYY-MM-DDThh:mmZ");
         store.dispatch(Actions.setDepartureDate(formattedDate));
     }
 
     setArrivalDate(date) {
-        let formattedDate = date.format("YYYYMMDDhhmmss");
+        let formattedDate = date.format("YYYY-MM-DDThh:mmZ");
         store.dispatch(Actions.setArrivalDate(formattedDate));
     }
 

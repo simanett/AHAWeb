@@ -15,19 +15,22 @@ class FlightSelected extends React.Component {
                     <table className="table">
                         <thead>
                             <tr>
-                                <th>Leaving on</th>
-                                <th>Arriving at</th>
                                 <th>From</th>
                                 <th>To</th>
+                                <th>Leaving on</th>
+                                <th>Arriving at</th>
+                                <th>Flight duration (min)</th>
+                                
                                 <th>Price</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr className="info">
-                                <td>{moment(this.props.chosenFlight.departure, "YYYYMMDDhhmmss").format("DD/MM/YYYY hh:mm:ss")}</td>
-                                <td>{this.props.chosenFlight.arrival}</td>
                                 <td>{this.props.chosenFlight.airportFrom}</td>
                                 <td>{this.props.chosenFlight.airportTo}</td>
+                                <td>{this.props.chosenFlight.departure}</td>
+                                <td>{moment(this.props.chosenFlight.departure, "DD/MM/YYYY hh:mm").add(this.props.chosenFlight.flightDuration, "m").format("DD/MM/YYYY hh:mm")}</td>
+                                <td>{this.props.chosenFlight.flightDuration}</td>
                                 <td>{this.props.chosenFlight.basicPrice}</td>
                             </tr>
                         </tbody>
