@@ -28,7 +28,7 @@ class FlightSelected extends React.Component {
                                 <td>{this.props.chosenFlight.airportFrom}</td>
                                 <td>{this.props.chosenFlight.airportTo}</td>
                                 <td>{this.props.chosenFlight.departure}</td>
-                                <td>{moment(this.props.chosenFlight.departure, "DD/MM/YYYY hh:mm").add(this.props.chosenFlight.flightDuration, "m").format("DD/MM/YYYY hh:mm")}</td>
+                                <td>{moment(this.props.chosenFlight.departure, "DD/MM/YYYY hh:mm").add(this.props.chosenFlight.flightDuration.valueOf(), "m").format("DD/MM/YYYY hh:mm")}</td>
                                 <td>{this.props.chosenFlight.flightDuration}</td>
                                 <td>{this.props.chosenFlight.basicPrice}</td>
                             </tr>

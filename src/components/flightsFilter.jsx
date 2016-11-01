@@ -40,7 +40,6 @@ class FlightsFilter extends React.Component {
     }
 
     render() {
-        // let startDate = moment();
         return (
             <div className="form-group row" id="flight-search">
                 <div>
@@ -48,6 +47,8 @@ class FlightsFilter extends React.Component {
                         <div className="col-sm-3">
                             <label className="col-sm-12" >Departure: </label>
                             <DatePicker
+                                dateFormat="DD/MM/YYYY"
+                                todayButton={"Today"}
                                 className = "form-control"
                                 selected = {moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ") }
                                 onChange={this.setDepartureDate.bind(this) }
