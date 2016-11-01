@@ -35,7 +35,6 @@ class FlightsFilter extends React.Component {
             console.log(error);
         });
         store.dispatch(Actions.setDepartureDate(moment().format("YYYY-MM-DDThh:mmZ")));
-        store.dispatch(Actions.setArrivalDate(moment().format("YYYY-MM-DDThh:mmZ")));
         store.dispatch(Actions.setAirportFrom("Budapest"));
     }
 
@@ -44,7 +43,7 @@ class FlightsFilter extends React.Component {
         return (
             <div className="form-group row" id="flight-search">
                 <div>
-                    <div className="col-sm-3">
+                    <div className="col-sm-4">
                         <label className="col-sm-12" >Departure: </label>
                         <DatePicker
                             className = "form-control"
@@ -52,15 +51,7 @@ class FlightsFilter extends React.Component {
                             onChange={this.setDepartureDate.bind(this) }
                             />
                     </div>
-                    <div className="col-sm-3">
-                        <label className="col-sm-12" >Arrival: </label>
-                        <DatePicker
-                            className = "form-control"
-                            selected = {moment(this.props.searchDetails.arrivalDate, "YYYY-MM-DDThh:mmZ") }
-                            onChange={this.setArrivalDate.bind(this) }
-                            />
-                    </div>
-                    <div className="col-sm-3">
+                    <div className="col-sm-4">
                         <label className="col-sm-12" >From: </label>
                         <select
                             className="form-control"
@@ -73,7 +64,7 @@ class FlightsFilter extends React.Component {
                             }) }
                         </select>
                     </div>
-                    <div className="col-sm-3">
+                    <div className="col-sm-4">
                         <label className="col-sm-12" >To: </label>
                         <select
                             className="form-control"
@@ -109,11 +100,6 @@ class FlightsFilter extends React.Component {
     setDepartureDate(date) {
         let formattedDate = date.format("YYYY-MM-DDThh:mmZ");
         store.dispatch(Actions.setDepartureDate(formattedDate));
-    }
-
-    setArrivalDate(date) {
-        let formattedDate = date.format("YYYY-MM-DDThh:mmZ");
-        store.dispatch(Actions.setArrivalDate(formattedDate));
     }
 
     setAirportFrom(event) {

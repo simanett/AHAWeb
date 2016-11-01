@@ -20,7 +20,6 @@ class FlightSelected extends React.Component {
                                 <th>Leaving on</th>
                                 <th>Arriving at</th>
                                 <th>Flight duration (min)</th>
-                                
                                 <th>Price</th>
                             </tr>
                         </thead>
