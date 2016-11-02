@@ -110,13 +110,21 @@ class FlightsFilter extends React.Component {
             if (document.getElementById("airport-to").value === "") {
                 store.dispatch(Actions.setErrorMessage("Please select a destination airport"));
             } else {
-                this.loadFlightsByFilterDetails("2016-11-15", "BUD", "NAN").then((result) => {
-                    let formattedFlights = this.formatFlights(result);
-                    store.dispatch(Actions.updateFlights(formattedFlights));
-                }).catch((err) => { alert(err) });
+                this.loadFlightsByFilterDetails(moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ").format("YYYY-MM-DD"),
+                    this.props.searchDetails.airportFrom, this.props.searchDetails.airportTo).then((result) => {
+                        if (result.length > 0) {
+                            let formattedFlights = this.formatFlights(result);
+                            store.dispatch(Actions.updateFlights(formattedFlights));
+                        } else {
+                            store.dispatch(Actions.setErrorMessage("Sorry, AHA doesn't fly on "
+                                + moment(this.props.searchDetails.departureDate, 'YYYY-MM-DDThh:mmZ').format('DD/MM/YYYY')
+                                + " from " + this.props.searchDetails.airportFrom
+                                + " to " + this.props.searchDetails.airportTo));
+                        }
+                    }).catch((err) => { 
+                        store.dispatch(Actions.setErrorMessage("Server unavailable. Please check back later.")); 
+                    });
             }
-        } else {
-            alert("there are errors");
         }
     }
 

@@ -56,8 +56,6 @@ class Flights extends React.Component {
                     })
                 )
             });
-            // alert(result[0].departure + " : " + formattedFlights[0].departure);
-            // store.dispatch(Actions.updateFlights(result))
             store.dispatch(Actions.updateFlights(formattedFlights))
         }).catch((error) => {
             console.log(error);
@@ -68,53 +66,55 @@ class Flights extends React.Component {
         return (
             <div id="flights">
                 <h2>Flight booking</h2>
-                { this.props.errorMessage.length > 0 &&
+                {this.props.errorMessage.length > 0 &&
                     <ConnectedErrorMessage />
                 }
                 {this.props.airports.length === 0 &&
                     <p className="col-sm-12">Database unavailable.Please check back later.</p>}
-                {this.props.flights.length > 0 && !this.props.seatBookingRequested &&
+                {!this.props.seatBookingRequested &&
                     <div>
                         <ConnectedFlightsFilter />
-                        { this.props.chosenFlight.id !== undefined &&
+                        {this.props.chosenFlight.id !== undefined &&
                             <ConnectedFlightSelected />
                         }
-                        <Table bordered hover responsive striped id="flight-list">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Flight number</th>
-                                    <th>Departure</th>
-                                    <th>Flight duration</th>
-                                    <th>Airplane</th>
-                                    <th>From</th>
-                                    <th>To</th>
-                                    <th>Price</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {this.props.flights.map((flight, index) => {
-                                    return (
-                                        <tr key={index} onClick={this.chooseFlight.bind(this) }>
-                                            <td>{flight.id}</td>
-                                            <td>{flight.flightNumber}</td>
-                                            <td>{flight.departure}</td>
-                                            <td>{flight.flightDuration}</td>
-                                            <td>{flight.airplane.model}</td>
-                                            <td>{flight.airportFrom.city}</td>
-                                            <td>{flight.airportTo.city}</td>
-                                            <td>{flight.basicPrice}</td>
-                                        </tr>
-                                    )
-                                }) }
-                            </tbody>
-                        </Table>
+                        {this.props.flights.length > 0 &&
+                            < Table bordered hover responsive striped id="flight-list">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Flight number</th>
+                                        <th>Departure</th>
+                                        <th>Flight duration</th>
+                                        <th>Airplane</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.props.flights.map((flight, index) => {
+                                        return (
+                                            <tr key={index} onClick={this.chooseFlight.bind(this)}>
+                                                <td>{flight.id}</td>
+                                                <td>{flight.flightNumber}</td>
+                                                <td>{flight.departure}</td>
+                                                <td>{flight.flightDuration}</td>
+                                                <td>{flight.airplane.model}</td>
+                                                <td>{flight.airportFrom.city}</td>
+                                                <td>{flight.airportTo.city}</td>
+                                                <td>{flight.basicPrice}</td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </Table>
+                        }
                     </div>
                 }
                 {this.props.seatBookingRequested &&
                     <ConnectedSeatBooking />
                 }
-            </div>
+            </div >
         );
     }
 
