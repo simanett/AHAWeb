@@ -49,9 +49,9 @@ class FlightsFilter extends React.Component {
                             <DatePicker
                                 dateFormat="DD/MM/YYYY"
                                 todayButton={"Today"}
-                                className = "form-control"
-                                selected = {moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ") }
-                                onChange={this.setDepartureDate.bind(this) }
+                                className="form-control"
+                                selected={moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ")}
+                                onChange={this.setDepartureDate.bind(this)}
                                 />
                         </div>
                         <div className="col-sm-3">
@@ -59,12 +59,12 @@ class FlightsFilter extends React.Component {
                             <select
                                 className="form-control"
                                 id="airport-from"
-                                onChange={this.setAirportFrom.bind(this) }>
+                                onChange={this.setAirportFrom.bind(this)}>
                                 {this.props.airports.map((airport, index) => {
                                     return (
                                         <option key={index} >{airport.city}</option>
                                     )
-                                }) }
+                                })}
                             </select>
                         </div>
                         <div className="col-sm-3">
@@ -72,11 +72,11 @@ class FlightsFilter extends React.Component {
                             <select
                                 className="form-control"
                                 id="airport-to"
-                                onChange={this.setAirportTo.bind(this) }>
+                                onChange={this.setAirportTo.bind(this)}>
                                 {this.props.searchDetails.airportTo === "" &&
                                     <option
                                         key="selectDestination"
-                                        value = ""
+                                        value=""
                                         selected
                                         disabled
                                         >Select destination
@@ -88,16 +88,16 @@ class FlightsFilter extends React.Component {
                                         return (
                                             <option
                                                 key={index}
-                                                value ={airport.city}
+                                                value={airport.city}
                                                 >{airport.city}
                                             </option>
                                         )
-                                    }) }
+                                    })}
                             </select>
                         </div>
                         <div className="col-sm-3">
                             <Button bsStyle="primary"
-                                onClick={this.handleFlightSearch.bind(this) }>Search AHA flights</Button>
+                                onClick={this.handleFlightSearch.bind(this)}>Search AHA flights</Button>
                         </div>
                     </Panel>
                 </div>
@@ -110,20 +110,27 @@ class FlightsFilter extends React.Component {
             if (document.getElementById("airport-to").value === "") {
                 store.dispatch(Actions.setErrorMessage("Please select a destination airport"));
             } else {
-                this.loadFlightsByFilterDetails("2016-11-15", "Budapest", "Nantes").then((resolve) => {
-                    alert("success");
+                this.loadFlightsByFilterDetails("2016-11-15", "BUD", "NAN").then((result) => {
+                    let formattedFlights = this.formatFlights(result);
+                    store.dispatch(Actions.updateFlights(formattedFlights));
                 }).catch((err) => { alert(err) });
             }
         } else {
             alert("there are errors");
         }
-        /*
-        alert(
-            moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ").format("YYYY-MM-DD") 
-            + moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ").add(2, "d").format("YYYY-MM-DD")
-        );
-        */
     }
+
+    formatFlights(flightsFromApi) {
+        return flightsFromApi.map((flight) => {
+            return (
+                Object.assign({}, flight, {
+                    departure: moment(flight.departure, "YYYY-MM-DDThh:mmZ").format("DD/MM/YYYY hh:mm"),
+                })
+            )
+        });
+    }
+
+
 
     loadFlightsByFilterDetails(departure, airportFrom, airportTo) {
         let startSearchDay = moment(departure, "YYYY-MM-DDThh:mmZ").format("YYYY-MM-DD");
@@ -140,14 +147,11 @@ class FlightsFilter extends React.Component {
                 success: function (data) {
                     resolve(data);
                 }.bind(this),
-                url: "http://localhost:8080/AHAService/FlightServlet?action=getFilteredFlights&from=Budapest&to=Nantes&start=2016-11-15&end=2016-11-17",
-                // url: "http://localhost:8080/AHAService/FlightServlet?action=getFlights",
-                /*
-                url: "http://localhost:8080/AHAService/FlightServlet?action=getFilteredFlights&from=" + airportFrom
-                + "&to=" + airportTo 
-                + "&start=" + startSearchDay 
-                + "&end=" + endSearchDay,
-                */
+                url: "http://localhost:8080/AHAService/FlightServlet?action=getFilteredFlights&from="
+                + airportFrom
+                + "&to=" + airportTo
+                + "&start=" + startSearchDay
+                + "&end= " + endSearchDay,
             });
         });
     }
