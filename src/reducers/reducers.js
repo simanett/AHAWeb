@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import moment from "moment";
 
 export const errorMessage = (state = "", action) => {
     switch (action.type) {
@@ -9,14 +10,28 @@ export const errorMessage = (state = "", action) => {
     }
 }
 
+
+
+
 export const flights = (state = [], action) => {
     switch (action.type) {
         case "LOAD_FLIGHTS":
             return action.flights
+        case "SET_VISIBLE_FLIGHTS":
+            return state.map((flight) => {
+                if (moment(flight.departure, "DD/MM/YYYY hh:mm").format("DD/MM/YYYY") === action.date) {
+                    return Object.assign({}, flight, {
+                        display: true,
+                    })
+                } else {
+                    return flight;
+                }
+            })
         default:
             return state
     }
 }
+
 
 export const chooseFlight = (state = {}, action) => {
     switch (action.type) {

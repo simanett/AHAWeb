@@ -133,6 +133,7 @@ class FlightsFilter extends React.Component {
             return (
                 Object.assign({}, flight, {
                     departure: moment(flight.departure, "YYYY-MM-DDThh:mmZ").format("DD/MM/YYYY hh:mm"),
+                    display: false,
                 })
             )
         });

@@ -6,13 +6,13 @@ import * as ReactRedux from "react-redux";
 import * as Actions from "../actions/actions";
 import "../css/aha.css";
 import { store } from "../index";
-import { Table, Button } from "react-bootstrap";
+import { Nav, NavItem, Table, Button } from "react-bootstrap";
 import { ConnectedFlightsFilter } from "./flightsFilter";
 import { ConnectedErrorMessage } from "./errorMessage";
 import { ConnectedFlightSelected } from "./flightSelected";
 import { ConnectedSeatBooking } from "./seatBooking";
 
-
+/*
 function getFlightsFromServlet() {
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -28,6 +28,7 @@ function getFlightsFromServlet() {
         });
     });
 }
+*/
 
 function getAirplaneFromServlet(airplaneType) {
     return new Promise((resolve, reject) => {
@@ -48,6 +49,8 @@ function getAirplaneFromServlet(airplaneType) {
 class Flights extends React.Component {
 
     componentDidMount() {
+        /* 
+        // List all available flights on first page load
         getFlightsFromServlet().then((result) => {
             let formattedFlights = result.map((flight) => {
                 return (
@@ -60,6 +63,7 @@ class Flights extends React.Component {
         }).catch((error) => {
             console.log(error);
         });
+        */
     }
 
     render() {
@@ -78,36 +82,54 @@ class Flights extends React.Component {
                             <ConnectedFlightSelected />
                         }
                         {this.props.flights.length > 0 &&
-                            < Table bordered hover responsive striped id="flight-list">
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Flight number</th>
-                                        <th>Departure</th>
-                                        <th>Flight duration</th>
-                                        <th>Airplane</th>
-                                        <th>From</th>
-                                        <th>To</th>
-                                        <th>Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {this.props.flights.map((flight, index) => {
-                                        return (
-                                            <tr key={index} onClick={this.chooseFlight.bind(this)}>
-                                                <td>{flight.id}</td>
-                                                <td>{flight.flightNumber}</td>
-                                                <td>{flight.departure}</td>
-                                                <td>{flight.flightDuration}</td>
-                                                <td>{flight.airplane.model}</td>
-                                                <td>{flight.airportFrom.city}</td>
-                                                <td>{flight.airportTo.city}</td>
-                                                <td>{flight.basicPrice}</td>
-                                            </tr>
-                                        )
-                                    })}
-                                </tbody>
-                            </Table>
+                            <div>
+                                <Nav bsStyle="tabs" activeKey={1} >
+                                    <NavItem
+                                        eventKey={1}
+                                        onSelect={this.handleSelect.bind(this)}
+                                        href="#">{moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ").format("DD/MM/YYYY")}</NavItem>
+                                    <NavItem
+                                        eventKey={2}
+                                        onSelect={this.handleSelect.bind(this)}
+                                        href="#">{moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ").add(1, "d").format("DD/MM/YYYY")}</NavItem>
+                                    <NavItem
+                                        eventKey={3}
+                                        onSelect={this.handleSelect.bind(this)}
+                                        href="#">{moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ").add(2, "d").format("DD/MM/YYYY")}</NavItem>
+                                </Nav>
+
+                                <Table bordered hover responsive striped id="flight-list">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Flight number</th>
+                                            <th>Departure</th>
+                                            <th>Flight duration</th>
+                                            <th>Airplane</th>
+                                            <th>From</th>
+                                            <th>To</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.props.flights.filter((flight) => { return flight.display })
+                                            .map((flight, index) => {
+                                                return (
+                                                    <tr key={index} onClick={this.chooseFlight.bind(this)}>
+                                                        <td>{flight.id}</td>
+                                                        <td>{flight.flightNumber}</td>
+                                                        <td>{flight.departure}</td>
+                                                        <td>{flight.flightDuration}</td>
+                                                        <td>{flight.airplane.model}</td>
+                                                        <td>{flight.airportFrom.city}</td>
+                                                        <td>{flight.airportTo.city}</td>
+                                                        <td>{flight.basicPrice}</td>
+                                                    </tr>
+                                                )
+                                            })}
+                                    </tbody>
+                                </Table>
+                            </div>
                         }
                     </div>
                 }
@@ -116,6 +138,20 @@ class Flights extends React.Component {
                 }
             </div >
         );
+    }
+
+    handleSelect(e) {
+        store.dispatch(
+            Actions.setVisibleFlights(
+                moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ")
+                    .add(e - 1, "d").format("DD/MM/YYYY")));
+    }
+
+    getFilteredflightsByDate(eventkey) {
+        let flightsToShow = this.props.flights.filter((flight) => {
+            return moment(flight.departure, "DD/MM/YYYY hh:mm").format("DD/MM/YYYY") === moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ").add(eventkey - 1, "d").format("DD/MM/YYYY")
+        })
+        return flightsToShow;
     }
 
     chooseFlight(event) {

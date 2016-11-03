@@ -54,6 +54,20 @@ export const setDepartureDate = (departureDate) => {
   }
 }
 
+
+
+
+const SET_VISIBLE_FLIGHTS = "SET_VISIBLE_FLIGHTS";
+export const setVisibleFlights = (date) => {
+  return {
+    type: SET_VISIBLE_FLIGHTS,
+    date: date,
+  }
+}
+
+
+
+
 const SET_AIRPORT_FROM = "SET_AIRPORT_FROM";
 export const setAirportFrom = (airportFrom) => {
   return {
