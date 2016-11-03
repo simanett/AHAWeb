@@ -50,7 +50,7 @@ class Flights extends React.Component {
 
     componentDidMount() {
         /* 
-        // List all available flights on first page load
+        // Display all available flights on first page load
         getFlightsFromServlet().then((result) => {
             let formattedFlights = result.map((flight) => {
                 return (
@@ -83,7 +83,7 @@ class Flights extends React.Component {
                         }
                         {this.props.flights.length > 0 &&
                             <div>
-                                <Nav bsStyle="tabs" activeKey={1} >
+                                <Nav bsStyle="tabs" activeKey={this.props.searchDetails.activeTab} >
                                     <NavItem
                                         eventKey={1}
                                         onSelect={this.handleSelect.bind(this)}
@@ -141,6 +141,7 @@ class Flights extends React.Component {
     }
 
     handleSelect(e) {
+        store.dispatch(Actions.setActiveTab(e));
         store.dispatch(
             Actions.setVisibleFlights(
                 moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ")

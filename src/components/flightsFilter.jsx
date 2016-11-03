@@ -113,6 +113,7 @@ class FlightsFilter extends React.Component {
                 this.loadFlightsByFilterDetails(moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ").format("YYYY-MM-DD"),
                     this.props.searchDetails.airportFrom, this.props.searchDetails.airportTo).then((result) => {
                         if (result.length > 0) {
+                            store.dispatch(Actions.setActiveTab(1));
                             let formattedFlights = this.formatFlights(result);
                             store.dispatch(Actions.updateFlights(formattedFlights));
                             store.dispatch(Actions.setVisibleFlights(

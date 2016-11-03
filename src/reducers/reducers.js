@@ -84,6 +84,7 @@ export const seatBookingRequested = (state = false, action) => {
 }
 
 let initSearchDetailsState = {
+    activeTab: 1,
     airportFrom: "",
     airportTo: "",
     departureDate: "",
@@ -101,6 +102,10 @@ export const searchDetails = (state = initSearchDetailsState, action) => {
         case "SET_AIRPORT_TO":
             return Object.assign({}, state, {
                 airportTo: action.airportTo,
+            });
+        case "SET_ACTIVE_TAB":
+            return Object.assign({}, state, {
+                activeTab: action.activeTab,
             });
         default:
             return state

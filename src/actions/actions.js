@@ -54,9 +54,6 @@ export const setDepartureDate = (departureDate) => {
   }
 }
 
-
-
-
 const SET_VISIBLE_FLIGHTS = "SET_VISIBLE_FLIGHTS";
 export const setVisibleFlights = (date) => {
   return {
@@ -65,14 +62,19 @@ export const setVisibleFlights = (date) => {
   }
 }
 
-
-
-
 const SET_AIRPORT_FROM = "SET_AIRPORT_FROM";
 export const setAirportFrom = (airportFrom) => {
   return {
     type: SET_AIRPORT_FROM,
     airportFrom: airportFrom,
+  }
+}
+
+const SET_ACTIVE_TAB = "SET_ACTIVE_TAB";
+export const setActiveTab = (activeTab) => {
+  return {
+    type: SET_ACTIVE_TAB,
+    activeTab: activeTab,
   }
 }
 
