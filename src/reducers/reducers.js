@@ -24,7 +24,9 @@ export const flights = (state = [], action) => {
                         display: true,
                     })
                 } else {
-                    return flight;
+                    return Object.assign({}, flight, {
+                        display: false,
+                    })
                 }
             })
         default:

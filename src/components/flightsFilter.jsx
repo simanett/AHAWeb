@@ -139,8 +139,6 @@ class FlightsFilter extends React.Component {
         });
     }
 
-
-
     loadFlightsByFilterDetails(departure, airportFrom, airportTo) {
         let startSearchDay = moment(departure, "YYYY-MM-DDThh:mmZ").format("YYYY-MM-DD");
         let endSearchDay = moment(departure, "YYYY-MM-DDThh:mmZ").add(2, "d").format("YYYY-MM-DD");
