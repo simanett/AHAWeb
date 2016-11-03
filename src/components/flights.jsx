@@ -86,15 +86,15 @@ class Flights extends React.Component {
                                 <Nav bsStyle="tabs" activeKey={1} >
                                     <NavItem
                                         eventKey={1}
-                                        onSelect={this.setVisibleFlights.bind(this)}
+                                        onSelect={this.handleSelect.bind(this)}
                                         href="#">{moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ").format("DD/MM/YYYY")}</NavItem>
                                     <NavItem
                                         eventKey={2}
-                                        onSelect={this.setVisibleFlights.bind(this)}
+                                        onSelect={this.handleSelect.bind(this)}
                                         href="#">{moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ").add(1, "d").format("DD/MM/YYYY")}</NavItem>
                                     <NavItem
                                         eventKey={3}
-                                        onSelect={this.setVisibleFlights.bind(this)}
+                                        onSelect={this.handleSelect.bind(this)}
                                         href="#">{moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ").add(2, "d").format("DD/MM/YYYY")}</NavItem>
                                 </Nav>
 
@@ -140,7 +140,7 @@ class Flights extends React.Component {
         );
     }
 
-    setVisibleFlights(e) {
+    handleSelect(e) {
         store.dispatch(
             Actions.setVisibleFlights(
                 moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ")

@@ -115,14 +115,16 @@ class FlightsFilter extends React.Component {
                         if (result.length > 0) {
                             let formattedFlights = this.formatFlights(result);
                             store.dispatch(Actions.updateFlights(formattedFlights));
+                            store.dispatch(Actions.setVisibleFlights(
+                                    moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ").format("DD/MM/YYYY")));
                         } else {
                             store.dispatch(Actions.setErrorMessage("Sorry, AHA doesn't fly on "
                                 + moment(this.props.searchDetails.departureDate, 'YYYY-MM-DDThh:mmZ').format('DD/MM/YYYY')
                                 + " from " + this.props.searchDetails.airportFrom
                                 + " to " + this.props.searchDetails.airportTo));
                         }
-                    }).catch((err) => { 
-                        store.dispatch(Actions.setErrorMessage("Server unavailable. Please check back later.")); 
+                    }).catch((err) => {
+                        store.dispatch(Actions.setErrorMessage("Server unavailable. Please check back later."));
                     });
             }
         }

@@ -11,8 +11,6 @@ export const errorMessage = (state = "", action) => {
 }
 
 
-
-
 export const flights = (state = [], action) => {
     switch (action.type) {
         case "LOAD_FLIGHTS":
