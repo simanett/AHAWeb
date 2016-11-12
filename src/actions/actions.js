@@ -93,3 +93,53 @@ export const seatBookingRequested = (seatBookingRequested) => {
     seatBookingRequested: seatBookingRequested,
   }
 }
+
+const RESET_SELECTION = "RESET_SELECTION";
+export const resetSelection = () => {
+  return {
+    type: RESET_SELECTION
+  }
+}
+
+const SAVE_AUTH_TOKEN = 'SAVE_AUTH_TOKEN';
+export const saveAuthToken = (token, profile) => {
+  return {
+    type: SAVE_AUTH_TOKEN,
+    token: token,
+    profile: profile
+  }
+}
+
+const SEAT_CHANGED = 'SEAT_CHANGED';
+export const seatChanged = (seatId) => {
+  return {
+    type: SEAT_CHANGED,
+    selectedSeat: seatId
+  }
+}
+
+const CREATE_BOOKING_REQUEST = 'CREATE_BOOKING_REQUEST';
+export const createBookingRequest = () => {
+  return {
+    type: CREATE_BOOKING_REQUEST,
+    sendingRequest: true
+
+  }
+}
+
+const CREATE_BOOKING_RESPONSE = 'CREATE_BOOKING_RESPONSE';
+export const createBookingResponse = (response, isError) => {
+  return {
+    type: CREATE_BOOKING_RESPONSE,
+    sendingRequest: false,
+    response: response,
+    isError: isError
+  }
+}
+
+const RESET_BOOKING = "RESET_BOOKING";
+export const resetBooking = () => {
+  return {
+    type: RESET_BOOKING
+  }
+}

@@ -21,3 +21,11 @@ body {
 #aha-app #flight-search label.col-sm-12 {
     padding-left: 0 !important;
 }
+
+.seat-table {
+	width: auto;
+}
+
+.seat {
+	width: 30px;
+}

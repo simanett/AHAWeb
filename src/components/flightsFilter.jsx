@@ -10,11 +10,14 @@ import { Button, Panel } from "react-bootstrap";
 import "../css/aha.css";
 import { store } from "../index";
 
-function getAirportsFromServlet() {
+function getAirportsFromServlet(token) {
     return new Promise((resolve, reject) => {
         $.ajax({
             cache: false,
             dataType: "json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('x-auth', token);
+            }.bind(this),
             error: function (xhr, status, err) {
                 reject(xhr.status);
             }.bind(this),
@@ -27,10 +30,13 @@ function getAirportsFromServlet() {
 }
 
 class FlightsFilter extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
     componentDidMount() {
         store.dispatch(Actions.setErrorMessage(""));
-        getAirportsFromServlet().then((result) => {
+        getAirportsFromServlet(this.props.token).then((result) => {
             store.dispatch(Actions.loadAirports(result))
         }).catch((error) => {
             console.log(error);
@@ -111,7 +117,7 @@ class FlightsFilter extends React.Component {
                 store.dispatch(Actions.setErrorMessage("Please select a destination airport"));
             } else {
                 this.loadFlightsByFilterDetails(moment(this.props.searchDetails.departureDate, "YYYY-MM-DDThh:mmZ").format("YYYY-MM-DD"),
-                    this.props.searchDetails.airportFrom, this.props.searchDetails.airportTo).then((result) => {
+                    this.props.searchDetails.airportFrom, this.props.searchDetails.airportTo, this.props.token).then((result) => {
                         if (result.length > 0) {
                             store.dispatch(Actions.setActiveTab(1));
                             let formattedFlights = this.formatFlights(result);
@@ -142,13 +148,16 @@ class FlightsFilter extends React.Component {
         });
     }
 
-    loadFlightsByFilterDetails(departure, airportFrom, airportTo) {
+    loadFlightsByFilterDetails(departure, airportFrom, airportTo, token) {
         let startSearchDay = moment(departure, "YYYY-MM-DDThh:mmZ").format("YYYY-MM-DD");
         let endSearchDay = moment(departure, "YYYY-MM-DDThh:mmZ").add(2, "d").format("YYYY-MM-DD");
         return new Promise((resolve, reject) => {
             $.ajax({
                 cache: false,
                 dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('x-auth', token);
+                }.bind(this),
                 error: function (xhr, status, err) {
                     console.log(xhr.status);
                     console.log(this.url);
@@ -206,5 +215,6 @@ export const ConnectedFlightsFilter = ReactRedux.connect(
         airports: state.airports,
         errorMessage: state.errorMessage,
         searchDetails: state.searchDetails,
+        token: state.auth.token
     })
 )(FlightsFilter);

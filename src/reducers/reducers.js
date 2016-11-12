@@ -76,6 +76,8 @@ export const airplane = (state = {}, action) => {
 
 export const seatBookingRequested = (state = false, action) => {
     switch (action.type) {
+        case "RESET_SELECTION":
+            return false;
         case "SEAT_BOOKING_REQUESTED":
             return action.seatBookingRequested
         default:
@@ -112,3 +114,41 @@ export const searchDetails = (state = initSearchDetailsState, action) => {
     }
 }
 
+export const auth = (state = {profile: {}}, action) => {
+    switch (action.type) {
+        case "SAVE_AUTH_TOKEN":
+            return Object.assign({}, state, {
+                token: action.token,
+                profile: action.profile
+            });
+
+        default:
+            return state
+    }
+}
+
+export const saveBookingRequested = (state = {}, action) => {
+    switch (action.type) {
+        case "RESET_SELECTION":
+            return {};
+        case "RESET_BOOKING":
+            return {};
+
+        case "CREATE_BOOKING_REQUEST":
+            return Object.assign({}, state, {
+                sendingRequest: action.sendingRequest
+            });
+        case "CREATE_BOOKING_RESPONSE":
+            return Object.assign({}, state, {
+                sendingRequest: action.sendingRequest,
+                response: action.response,
+                isError: action.isError
+            });
+        case "SEAT_CHANGED":
+            return Object.assign({}, state, {
+                selectedSeat: action.selectedSeat
+            });
+        default:
+            return state
+    }
+}

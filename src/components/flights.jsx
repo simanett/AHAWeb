@@ -13,11 +13,14 @@ import { ConnectedFlightSelected } from "./flightSelected";
 import { ConnectedSeatBooking } from "./seatBooking";
 
 /*
-function getFlightsFromServlet() {
+function getFlightsFromServlet(token) {
     return new Promise((resolve, reject) => {
         $.ajax({
             cache: false,
             dataType: "json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('x-auth', token);
+            }.bind(this),
             error: function (xhr, status, err) {
                 reject(xhr.status);
             }.bind(this),
@@ -30,11 +33,14 @@ function getFlightsFromServlet() {
 }
 */
 
-function getAirplaneFromServlet(airplaneType) {
+function getAirplaneFromServlet(airplaneType, token) {
     return new Promise((resolve, reject) => {
         $.ajax({
             cache: false,
             dataType: "json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('x-auth', token);
+            }.bind(this),
             error: function (xhr, status, err) {
                 reject(xhr.status);
             }.bind(this),
@@ -47,6 +53,10 @@ function getAirplaneFromServlet(airplaneType) {
 }
 
 class Flights extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
 
     componentDidMount() {
         /* 
@@ -67,13 +77,15 @@ class Flights extends React.Component {
     }
 
     render() {
+        console.log(this.props);
+
         return (
             <div id="flights">
                 <h2>Flight booking</h2>
-                {this.props.errorMessage.length > 0 &&
+                {this.props.errorMessage && this.props.errorMessage.length > 0 &&
                     <ConnectedErrorMessage />
                 }
-                {this.props.airports.length === 0 &&
+                {this.props.airports && this.props.airports.length === 0 &&
                     <p className="col-sm-12">Database unavailable.Please check back later.</p>}
                 {!this.props.seatBookingRequested &&
                     <div>
@@ -81,7 +93,7 @@ class Flights extends React.Component {
                         {this.props.chosenFlight.id !== undefined &&
                             <ConnectedFlightSelected />
                         }
-                        {this.props.flights.length > 0 &&
+                        {this.props.flights && this.props.flights.length > 0 &&
                             <div>
                                 <Nav bsStyle="tabs" activeKey={this.props.searchDetails.activeTab} >
                                     <NavItem
@@ -169,7 +181,7 @@ class Flights extends React.Component {
         }
         if (parent) {
             store.dispatch(Actions.chooseFlight(chosenFlight));
-            getAirplaneFromServlet(chosenFlight.airplane).then((result) => {
+            getAirplaneFromServlet(chosenFlight.airplane, this.props.token).then((result) => {
                 store.dispatch(Actions.loadAirplane(result));
             }).catch((error) => {
                 console.log(error);
@@ -187,5 +199,6 @@ export const ConnectedFlights = ReactRedux.connect(
         flights: state.flights,
         searchDetails: state.searchDetails,
         seatBookingRequested: state.seatBookingRequested,
+        token: state.auth.token
     })
 )(Flights);
